@@ -1,1 +1,1 @@
-console.log(window.MY_SECRET)
+console.log(window.TOKEN)
