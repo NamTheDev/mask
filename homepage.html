@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mask</title>
+    <link rel="icon" href="assets/makimaIcon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-bs-theme="dark" style="background-color: rgb(19, 18, 18); height: 100vh;">
+    <nav class="navbar p-4 mx-5 my-2 bg-black bg-opacity-75 rounded-top-4" id="navbar">
+        <div class="container-fluid" style="position: relative;">
+            <a class="navbar-brand fs-4 fw-bold">
+                M4sk
+            </a>
+        </div>
+    </nav>
+    <div class="mx-5 bg-black bg-opacity-50 p-5 rounded-bottom-4" id="contentBox">
+        <div class="d-flex justify-content-between column-gap-5 row-gap-4" id="header">
+            <div>
+                <h1 class="display-1">M4sk</h1>
+                <h3>A discord bot made for fun.</h3>
+            </div>
+            <div>
+                <img src="/assets/makima.png" alt="Makima" style="width: 250px; height: 250px;"
+                    class="rounded-circle object-fit-cover rounded">
+            </div>
+        </div>
+        <div id="buttonGroup" class="d-flex row-gap-2 column-gap-2">
+            <button class="btn btn-link p-2 fw-bold fs-6" style="min-width: 100px" href="/support">
+                <i class="fa-solid fa-right-to-bracket me-2"></i>
+                Join support server
+            </button>
+            <button class="btn btn-dark p-2 fw-bold fs-6" style="min-width: 100px" href="/commands">
+                <i class="fa-solid fa-list me-2"></i>
+                Commands list
+            </button>
+        </div>
+    </div>
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top mt-4 mx-5" id="footer">
+        <p class="col-md-4 mb-0 text-body-secondary">© 2024 Nam, dev</p>
+        <ul class="nav col-md-4 justify-content-end">
+            <li class="nav-item"><a href="/homepage" class="nav-link px-2 text-body-secondary">Home</a></li>
+            <li class="nav-item"><a href="/commands" class="nav-link px-2 text-body-secondary">Commands</a></li>
+            <li class="nav-item"><a href="/support" class="nav-link px-2 text-body-secondary">Support</a></li>
+        </ul>
+    </footer>
+</body>
+<script src="/scripts/homepage.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+</html>
