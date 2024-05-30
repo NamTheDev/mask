@@ -1,0 +1,14 @@
+[
+    {
+        "name": "/support",
+        "url": "https://discord.gg/dFf3za8Pmj"
+    },
+    {
+        "name": "/",
+        "url": "/homepage"
+    },
+    {
+        "name": "*",
+        "url": "/homepage"
+    }
+]
