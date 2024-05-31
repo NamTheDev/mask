@@ -20,16 +20,31 @@
             </a>
         </div>
     </nav>
-    <div class="mx-5 bg-black bg-opacity-50 p-5 rounded-bottom-4 d-flex justify-content-evenly" id="contentBox">
+    <div class="mx-5 bg-black bg-opacity-50 p-5 rounded-bottom-4 d-flex justify-content-evenly flex-wrap row-gap-2 column-gap-2"
+        id="contentBox">
     </div>
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top mt-4 mx-5" id="footer">
         <p class="col-md-4 mb-0 text-body-secondary">© 2024 Nam, dev</p>
         <ul class="nav col-md-4 justify-content-end">
             <li class="nav-item"><a href="homepage" class="nav-link px-2 text-body-secondary">Home</a></li>
             <li class="nav-item"><a href="commands" class="nav-link px-2 text-body-secondary">Commands</a></li>
-            <li class="nav-item"><a onclick="window.open('support')" class="nav-link px-2 text-body-secondary">Support</a></li>
+            <li class="nav-item"><a onclick="window.open('support')"
+                    class="nav-link px-2 text-body-secondary">Support</a></li>
         </ul>
     </footer>
+    <div class="modal fade" id="optionsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content bg-black">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Command options</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="bg-dark bg-opacity-50 rounded p-2 d-flex flex-wrap justify-content-evenly" style="min-height: 50px" id="optionsBox">None.</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script src="scripts/commands.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
