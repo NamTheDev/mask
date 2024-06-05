@@ -14,29 +14,32 @@
 
 <body data-bs-theme="dark" style="background-color: rgb(19, 18, 18); height: 100vh;">
     <nav class="navbar p-4 mx-5 my-2 bg-black bg-opacity-75 rounded-top-4" id="navbar">
-        <div class="container-fluid" style="position: relative;">
+        <div class="container-fluid d-flex justify-content-between" style="position: relative;">
             <a class="navbar-brand fs-4 fw-bold">
                 M4sk
             </a>
+            <img src="assets/makima.png" alt="Makima" height="50" width="100"
+                class="object-fit-cover rounded">
         </div>
     </nav>
-    <div class="mx-5 bg-black bg-opacity-50 p-5 rounded-bottom-4" id="contentBox">
+    <div class="mx-5 bg-black bg-opacity-50 p-5 rounded-bottom-4 d-flex row-gap-4 flex-column" id="contentBox">
         <div class="d-flex justify-content-between column-gap-5 row-gap-4" id="header">
             <div>
                 <h1 class="display-1">M4sk</h1>
                 <h3>A discord bot made for fun.</h3>
             </div>
             <div>
-                <img src="assets/makima.png" alt="Makima" style="width: 250px; height: 250px;"
+                <img src="assets/makima.gif" alt="Makima" style="width: 200px; height: 200px;"
                     class="rounded-circle object-fit-cover rounded">
             </div>
         </div>
-        <div id="buttonGroup" class="d-flex row-gap-2 column-gap-2">
+        <div id="buttonGroup" class="d-flex row-gap-2 column-gap-2 justify-content-center flex-wrap">
             <button class="btn btn-link p-2 fw-bold fs-6" style="min-width: 100px" onclick="window.open('support')">
                 <i class="fa-solid fa-right-to-bracket me-2"></i>
                 Join support server
             </button>
-            <button class="btn btn-dark p-2 fw-bold fs-6" style="min-width: 100px" onclick="window.location.href = 'commands'">
+            <button class="btn btn-dark p-2 fw-bold fs-6" style="min-width: 100px"
+                onclick="window.location.href = 'commands'">
                 <i class="fa-solid fa-list me-2"></i>
                 Commands list
             </button>
@@ -47,7 +50,8 @@
         <ul class="nav col-md-4 justify-content-end">
             <li class="nav-item"><a href="home" class="nav-link px-2 text-body-secondary">Home</a></li>
             <li class="nav-item"><a href="commands" class="nav-link px-2 text-body-secondary">Commands</a></li>
-            <li class="nav-item"><a onclick="window.open('support')" class="nav-link px-2 text-body-secondary">Support</a></li>
+            <li class="nav-item"><a onclick="window.open('support')"
+                    class="nav-link px-2 text-body-secondary">Support</a></li>
         </ul>
     </footer>
 </body>

@@ -2,6 +2,7 @@ const header = document.getElementById('header');
 const contentBox = document.getElementById('contentBox');
 const navbar = document.getElementById('navbar');
 const footer = document.getElementById('footer');
+const botAvatar = document.getElementById('botAvatar')
 
 function handleScreenWidthChange(event) {
     if (event.matches) {
