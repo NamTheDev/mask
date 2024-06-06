@@ -4,11 +4,11 @@
     const contentBox = document.getElementById('contentBox');
     const commandsBox = document.getElementById('commandsBox');
     const JSONButton = document.getElementsByName('JSONButton');
+    const JSONDisplayBLock = document.getElementById('JSONDisplayBLock')
     const JSONModal = new bootstrap.Modal(document.getElementById('JSONModal'), {
         backdrop: 'static',
         keyboard: false
     })
-    JSONModal.show()
     const commands = await (await fetch('api/commands')).json();
     for (const command of commands) {
         if (!command.options) continue;
@@ -67,7 +67,7 @@
     commands.forEach((command, index) => {
         const { name, description, type, subCommands, subCommandGroups } = command
         const commandCard = document.createElement('div')
-        commandCard.className = 'bg-dark bg-opacity-75 rounded p-4 d-flex flex-column'
+        commandCard.className = 'bg-dark bg-opacity-25 rounded p-4 d-flex flex-column'
         const additonalString = []
         if (subCommandGroups) {
             for (const subCommandGroup of subCommandGroups) {
@@ -89,9 +89,11 @@
     })
     for (const button of JSONButton) {
         button.addEventListener('click', () => {
-            console.log('hi')
             const json = button.getAttribute('json')
-            decodeURI(json).split('·').join(' ')
+            JSONDisplayBLock.innerHTML = decodeURI(json).split('·').join(' ')
+            JSONModal.show()
+            hljs.highlightElement(JSONDisplayBLock);
+            JSONDisplayBLock.removeAttribute('data-highlighted')
         })
     }
 })();
