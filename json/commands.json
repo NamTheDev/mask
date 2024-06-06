@@ -7,12 +7,31 @@
             {
                 "name": "dumbass",
                 "description": "say hi to someone who is dumb",
-                "type": 1,
-                "options": [{
-                    "name": "hi",
-                    "type": 1,
-                    "description":"say hi to someone who is dumb"
-                }]
+                "type": 2,
+                "options": [
+                    {
+                        "name": "hi",
+                        "type": 1,
+                        "description": "say hi to someone who is dumb"
+                    }
+                ]
+            },
+            {
+                "name": "smartass",
+                "description": "say hi to someone who is smart",
+                "type": 2,
+                "options": [
+                    {
+                        "name": "hello",
+                        "type": 1,
+                        "description":"say hi to someone who is smart",
+                        "options": [{
+                            "name": "user",
+                            "type": 3,
+                            "description": "target to say hi"
+                        }]
+                    }
+                ]
             }
         ]
     },
@@ -40,10 +59,6 @@
         "name": "hi",
         "description": "say hi to someone",
         "type": 1
-    }, {
-        "name": "hi",
-        "description": "say hi to someone",
-        "type": 1
     },
     {
         "name": "hi",
@@ -54,7 +69,13 @@
         "name": "hi",
         "description": "say hi to someone",
         "type": 1
-    }, {
+    },
+    {
+        "name": "hi",
+        "description": "say hi to someone",
+        "type": 1
+    },
+    {
         "name": "hi",
         "description": "say hi to someone",
         "type": 1

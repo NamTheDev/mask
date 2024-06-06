@@ -2,41 +2,41 @@
     const navbar = document.getElementById('navbar');
     const footer = document.getElementById('footer');
     const contentBox = document.getElementById('contentBox');
-    const commandsBox = document.getElementById('commandsBox')
+    const commandsBox = document.getElementById('commandsBox');
+    const JSONButton = document.getElementsByName('JSONButton');
+    const JSONModal = new bootstrap.Modal(document.getElementById('JSONModal'), {
+        backdrop: 'static',
+        keyboard: false
+    })
+    JSONModal.show()
     const commands = await (await fetch('api/commands')).json();
     for (const command of commands) {
-        const options = command.options
-        if (!options) continue;
-        if (options.find(option => option.type !== 2)) continue;
-        command.subCommandGroups = []
-        for (const option of options) {
-            command.subCommandGroups.push(option);
-            if (option.options.find(option => option.type !== 1)) continue;
-            command.subCommands = []
-            for (const subCommand of option.options) {
-                command.subCommands.push(subCommand);
-                for (const subCommandOption of subCommand.options) {
-                    command.subCommandOptions.push(subCommandOption)
+        if (!command.options) continue;
+        command.subCommandGroups = command.options.filter(({ type }) => type === 2)
+        command.subCommands = command.options.filter(({ type }) => type === 1)
+        command.subCommandOptions = []
+        if (command.subCommandGroups.length > 0) {
+            for (const subCommandGroup of command.subCommandGroups) {
+                for (const subCommand of subCommandGroup.options) {
+                    subCommand.parent = subCommandGroup.name
+                    command.subCommands.push(subCommand)
+                    if (subCommand.options) {
+                        for (const option of subCommand.options) {
+                            option.parent = subCommand.name
+                            command.subCommandOptions.push(option)
+                        }
+                    }
+                }
+            }
+        } else if (command.subCommands.length > 0) {
+            for (const subCommand of command.subCommands) {
+                if (!subCommand.options) continue;
+                for (const option of subCommand.options) {
+                    option.parent = subCommand.name
+                    command.subCommandOptions.push(option)
                 }
             }
         }
-        command.options = undefined
-    }
-    for (const command of commands) {
-        const options = command.options
-        if (!options) continue;
-        if (options.find(option => option.type !== 1)) continue;
-        command.subCommandOptions = []
-        command.subCommands = []
-        for (const option of options) {
-            command.subCommands.push(option);
-            if(!option.options) continue;
-            console.log(option)
-            for (const subCommandOption of option.options) {
-                command.subCommandOptions.push(subCommandOption)
-            }
-        }
-        command.options = undefined
     }
     const COMMAND_TYPES = ['Chat Input', 'User', 'Message'];
     const OPTION_TYPES = ["Sub Command", "Sub Command Group", "String", "Integer", "Boolean", "User", "Channel", "Role", "Mentionable", "Number", "Attachment"];
@@ -64,18 +64,18 @@
     handleScreenWidthChange(mediaQuery);
 
     // Adding command rows to the table
-    commands.forEach(({ name, description, type, options, subCommands, subCommandGroups, subCommandOptions }, index) => {
+    commands.forEach((command, index) => {
+        const { name, description, type, subCommands, subCommandGroups } = command
         const commandCard = document.createElement('div')
-        commandCard.className = 'bg-dark bg-opacity-75 rounded p-4 d-flex flex-column text-center'
+        commandCard.className = 'bg-dark bg-opacity-75 rounded p-4 d-flex flex-column'
         const additonalString = []
-        if (options) {
-            for (const { name } of options) {
-                additonalString.push(`[${name}]`)
-            }
-        }
         if (subCommandGroups) {
-            for (const { name } of subCommandGroups) {
-                additonalString.push(name)
+            for (const subCommandGroup of subCommandGroups) {
+                for (const subCommand of subCommands) {
+                    if (subCommand.parent === subCommandGroup.name) {
+                        additonalString.push(`${subCommandGroup.name} ${subCommand.name}`)
+                    }
+                }
             }
         }
         if (subCommands) {
@@ -83,13 +83,15 @@
                 additonalString.push(name)
             }
         }
-        if(subCommandOptions) {
-            for (const {name} of subCommandOptions) {
-                additonalString.push(`[${name}]`)
-            }
-        }
-        commandCard.innerHTML = `<h2>${name}</h2><h5 class="text-secondary">${COMMAND_TYPES[Number(type) - 1]}</h5><strong>${description}</strong><div class='bg-black bg-opacity-75 p-2 mt-3 rounded'>/${name} ${additonalString.join(' ')}</div>`
+        commandCard.innerHTML = `<h2><span class="text-secondary-emphasis" style="font-size: 24px">${index + 1}. </span>${name}</h2><h5 class="text-secondary">${COMMAND_TYPES[Number(type) - 1]}</h5><p>${description}</p>${additonalString.map(string => `<div class='bg-black bg-opacity-75 p-2 mt-3 rounded'>/${name} ${string}</div>`).join('')}<hr><button class="btn btn-dark border border-0" json="${encodeURI(JSON.stringify(command, null, '·'))}" name="JSONButton">View JSON data</button>`
         commandCard.style.width = '250px'
         commandsBox.appendChild(commandCard)
     })
+    for (const button of JSONButton) {
+        button.addEventListener('click', () => {
+            console.log('hi')
+            const json = button.getAttribute('json')
+            decodeURI(json).split('·').join(' ')
+        })
+    }
 })();
