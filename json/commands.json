@@ -1,0 +1,72 @@
+[
+    {
+        "name": "hi",
+        "description": "say hi to someone",
+        "type": 1,
+        "options": [
+            {
+                "name": "dumbass",
+                "description": "say hi to someone who is dumb",
+                "type": 1,
+                "options": [{
+                    "name": "hi",
+                    "type": 1,
+                    "description":"say hi to someone who is dumb"
+                }]
+            }
+        ]
+    },
+    {
+        "name": "hi",
+        "description": "say hi to someone",
+        "type": 1
+    },
+    {
+        "name": "hi",
+        "description": "say hi to someone",
+        "type": 1
+    },
+    {
+        "name": "hi",
+        "description": "say hi to someone",
+        "type": 1
+    },
+    {
+        "name": "hi",
+        "description": "say hi to someone",
+        "type": 1
+    },
+    {
+        "name": "hi",
+        "description": "say hi to someone",
+        "type": 1
+    }, {
+        "name": "hi",
+        "description": "say hi to someone",
+        "type": 1
+    },
+    {
+        "name": "hi",
+        "description": "say hi to someone",
+        "type": 1
+    },
+    {
+        "name": "hi",
+        "description": "say hi to someone",
+        "type": 1
+    }, {
+        "name": "hi",
+        "description": "say hi to someone",
+        "type": 1
+    },
+    {
+        "name": "hi",
+        "description": "say hi to someone",
+        "type": 1
+    },
+    {
+        "name": "hi",
+        "description": "say hi to someone",
+        "type": 1
+    }
+]
