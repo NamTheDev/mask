@@ -8,15 +8,19 @@ function handleScreenWidthChange(event) {
     if (event.matches) {
       // Screen width is less than 650px
       header.classList.add('flex-column', 'text-center');
-      contentBox.classList.replace('mx-5', 'mx-3');
-      navbar.classList.replace('mx-5', 'mx-3');
-      footer.classList.replace('mx-5', 'mx-3');
+      contentBox.classList.replace('mx-5', 'mx-2');
+      contentBox.classList.replace('p-5', 'p-3');
+      navbar.classList.replace('p-4', 'p-2');
+      navbar.classList.replace('mx-5', 'mx-2');
+      footer.classList.replace('mx-5', 'mx-2');
     } else {
       // Screen width is 650px or greater
       header.classList.remove('flex-column', 'text-center');
-      contentBox.classList.replace('mx-3', 'mx-5');
-      navbar.classList.replace('mx-3', 'mx-5');
-      footer.classList.replace('mx-3', 'mx-5');
+      contentBox.classList.replace('mx-2', 'mx-5');
+      contentBox.classList.replace('p-2', 'p-4');
+      navbar.classList.replace('p-3', 'p-5');
+      navbar.classList.replace('mx-2', 'mx-5');
+      footer.classList.replace('mx-2', 'mx-5');
     }
   }
 

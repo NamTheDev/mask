@@ -1,3 +1,15 @@
 body::-webkit-scrollbar {
     display: none;
 }
+
+.command-card {
+    position: relative;
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 500ms ease-out, opacity 1s ease-out;
+}
+
+.command-card.visible {
+    transform: translateY(0);
+    opacity: 1;
+}
