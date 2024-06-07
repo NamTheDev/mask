@@ -14,7 +14,7 @@
     const commands = await (await fetch('api/commands')).json();
     const COMMAND_TYPES = ['Chat Input', 'User', 'Message'];
     const OPTION_TYPES = [
-        "Sub Command", "Sub Command Group", "String", "Integer", "Boolean", 
+        "Sub Command", "Sub Command Group", "String", "Integer", "Boolean",
         "User", "Channel", "Role", "Mentionable", "Number", "Attachment"
     ];
 
@@ -41,7 +41,7 @@
     handleScreenWidthChange(mediaQuery);
 
     async function appendCommandCard(command, index) {
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 500));
         const { name, description, type } = command;
         const optionTypes = OPTION_TYPES.map((opt, i) => `${i + 1} = ${opt}`).join('\n');
         const commandTypes = COMMAND_TYPES.map((cmd, i) => `${i + 1} = ${cmd}`).join('\n');
