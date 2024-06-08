@@ -40,8 +40,8 @@
     // Initial check
     handleScreenWidthChange(mediaQuery);
 
+    let delay = 0
     async function appendCommandCard(command, index) {
-        await new Promise(resolve => setTimeout(resolve, 500));
         const { name, description, type } = command;
         const optionTypes = OPTION_TYPES.map((opt, i) => `${i + 1} = ${opt}`).join('\n');
         const commandTypes = COMMAND_TYPES.map((cmd, i) => `${i + 1} = ${cmd}`).join('\n');
@@ -64,12 +64,14 @@
                 View JSON data
             </button>`;
         commandCard.style.width = '250px';
+        delay+=index+1*100
+        commandCard.style.setProperty('--transition-delay', `${delay}ms`)
         commandsBox.appendChild(commandCard);
 
         // Add the visible class after a short delay
         setTimeout(() => {
             commandCard.classList.add('visible');
-        }, 100);
+        }, 1000);
     }
 
     async function initializeCommands() {
