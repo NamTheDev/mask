@@ -71,7 +71,7 @@
         // Add the visible class after a short delay
         setTimeout(() => {
             commandCard.classList.add('visible');
-        }, 1000);
+        }, 200);
     }
 
     async function initializeCommands() {
