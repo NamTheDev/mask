@@ -64,7 +64,7 @@
                 View JSON data
             </button>`;
         commandCard.style.width = '250px';
-        delay+=index+1*100
+        delay += index + 1 * 100
         commandCard.style.setProperty('--transition-delay', `${delay}ms`)
         commandsBox.appendChild(commandCard);
 
@@ -73,7 +73,6 @@
             commandCard.classList.add('visible');
         }, 200);
     }
-
     async function initializeCommands() {
         for (const [index, command] of commands.entries()) {
             await appendCommandCard(command, index);
