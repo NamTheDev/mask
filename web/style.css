@@ -41,3 +41,7 @@ input[type="text"] {
 .hover:hover {
     background-color: rgba(var(--bs-secondary-rgb), .3) !important;
 }
+
+#textarea::-webkit-scrollbar {
+    display: none;
+}
