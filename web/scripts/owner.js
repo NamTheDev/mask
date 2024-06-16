@@ -32,7 +32,7 @@
     if (localStorage.getItem('UserLoggedIn') !== 'yes') {
         let key = prompt('Enter key')
         if (key) {
-            const response = await fetch(`api/verify_owner`, {
+            const response = await fetch(`api/verifyOwner`, {
                 headers: { key }
             });
             const data = await response.json();

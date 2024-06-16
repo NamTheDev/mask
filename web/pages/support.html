@@ -27,19 +27,20 @@
         <form id="form">
             <div class="mb-3" id="gmailInputBox">
                 <label for="gmailInput" class="form-label">gmail address</label>
-                <input type="gmail" class="form-control bg-dark bg-opacity-25" id="gmailInput" aria-describedby="gmailHelp">
+                <input type="gmail" class="form-control bg-dark bg-opacity-25" id="gmailInput" aria-describedby="gmailHelp" autocomplete="off">
                 <div id="gmailHelp" class="form-text">We'll never share your gmail with anyone else.</div>
                 <div id="validationMessage" class="invalid-feedback">
                     Please enter a valid Gmail.
                   </div>
               </div>
             <div class="mb-3">
-                    <textarea type='text' value="text" name='message' class="form-control bg-dark bg-opacity-25" id="textarea" placeholder="Your bot suck..." style="height: 150px;"></textarea>
+                    <textarea type='text' value="text" name='message' class="form-control bg-dark bg-opacity-25" id="textarea" placeholder="Your bot suck..." style="height: 150px;" autocomplete="off"></textarea>
                     <div id="validationMessage" class="invalid-feedback">
                         Please enter atleast 100 letters.
                       </div>
             </div>
             <button type="button" class="btn btn-outline-light" id="submitButton">Submit</button>
+            <button type="button" class="btn btn-outline-light" id="returnButton" style="display: none;" onclick="window.location.href='/support'"><i class="fa-solid fa-left-long me-1"></i>Return</button>
             <button type="button" class="btn btn-outline-light" id="editButton" style="display: none;">Edit</button>
         </form>
     </div>

@@ -3,8 +3,8 @@
     const gmailInput = document.getElementById('gmailInput')
     const gmailInputBox = document.getElementById('gmailInputBox')
     const submitButton = document.getElementById('submitButton')
-    submitButton.removeAttribute('disabled')
     const editButton = document.getElementById('editButton')
+    const returnButton = document.getElementById('returnButton')
     const config = await (await fetch('/config.json')).json()
     const url = window.location.href
     const description = document.getElementById('description')
@@ -12,6 +12,7 @@
         submitButton.style.display = 'none';
         supportMessageBox.style.display = 'none';
         gmailInputBox.style.display = 'none';
+        returnButton.style.display = '';
         description.textContent = 'Your submission has been delivered! Thank you for contacting us.'
 
     } else if (url.includes('?failed')) {
@@ -19,7 +20,7 @@
         supportMessageBox.style.display = 'none';
         gmailInputBox.style.display = 'none';
         editButton.style.display = '';
-        description.innerHTML = '<span class="text-danger">[INVALID EMAIL]</span> - your submission has not been sent.<br>Please check your email address carefully before submitting.'
+        description.innerHTML = '<span class="text-danger">[INVALID gmail]</span> - your submission has not been sent.<br>Please check your gmail address carefully before submitting.'
         editButton.addEventListener('click', () => {
             window.location.href = '/support?edit'
         })
@@ -42,36 +43,41 @@
         setInterval(updateDescription, 1000)
     }
 
-    const validateEmail = (email) => {
-        return String(email)
-            .toLowerCase()
-            .match(
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            );
+    const validateGmail = async (gmail) => {
+        const { response } = await (await fetch(`api/validateGmail?gmail=${gmail}`)).json()
+        return response
     };
 
-    submitButton.addEventListener('click', () => {
-        localStorage.setItem('gmail', gmailInput.value)
-        localStorage.setItem('supportMessage', supportMessageBox.value)
-        if (!validateEmail(gmailInput.value)) supportMessageBox.classList.add('is-invalid')
-        else if (supportMessageBox.value.length < config.supportMessageMaxValue) supportMessageBox.classList.add('is-invalid')
-        else {
-            window.location.href = `/api/submit_support?message=${encodeURI(supportMessageBox.value)}&gmail=${encodeURI(gmailInput.value)}`
-            submitButton.toggleAttribute('disabled')
+    const toggleValidation = async (element, option) => {
+        const { classList } = element
+        const oppositeOfOption = option === 'valid' ? 'invalid' : 'valid'
+        classList.remove(`is-${oppositeOfOption}`)
+        classList.add(`is-${option}`)
+    }
+
+    const checkIsValid = (element) => {
+        const { className } = element
+        return className.includes('is-valid')
+    }
+
+    submitButton.addEventListener('click', async () => {
+        if (checkIsValid(gmailInput) && checkIsValid(supportMessageBox)) {
+            localStorage.setItem('gmail', gmailInput.value)
+            localStorage.setItem('supportMessage', supportMessageBox.value)
+            return window.location.href = `/api/submitSupport?message=${encodeURI(supportMessageBox.value)}&gmail=${encodeURI(gmailInput.value)}`
         }
     })
 
-    gmailInput.addEventListener('input', () => {
-        if (gmailInput.className.includes('is-invalid')) gmailInput.classList.remove('is-invalid')
-        if (validateEmail(gmailInput.value)) {
-            const slicedValue = gmailInput.value.split('@gmail.com')
-            if (slicedValue[0].length < 3) return gmailInput.classList.add('is-invalid')
-        } else gmailInput.classList.add('is-invalid')
+    gmailInput.addEventListener('input', async () => {
+        const validation = await validateGmail(gmailInput.value)
+        if (validation)
+            toggleValidation(gmailInput, 'valid');
+        else toggleValidation(gmailInput, 'invalid');
     })
 
     supportMessageBox.addEventListener('input', () => {
-        if (supportMessageBox.className.includes('is-invalid')) supportMessageBox.classList.remove('is-invalid')
-        if (supportMessageBox.value.length >= config.supportMessageMaxValue) supportMessageBox.classList.add('is-valid')
-        else supportMessageBox.classList.remove('is-valid')
+        if (supportMessageBox.value.length >= config.supportMessageMaxValue)
+            toggleValidation(supportMessageBox, 'valid');
+        else toggleValidation(supportMessageBox, 'invalid');
     })
 })()
