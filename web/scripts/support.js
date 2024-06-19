@@ -5,6 +5,34 @@
     const submitButton = document.getElementById('submitButton')
     const editButton = document.getElementById('editButton')
     const returnButton = document.getElementById('returnButton')
+    const contentBox = document.getElementById('contentBox');
+    const navbar = document.getElementById('navbar');
+    const footer = document.getElementById('footer');
+
+    function handleScreenWidthChange(event) {
+        if (event.matches) {
+            // Screen width is less than 650px
+            contentBox.classList.replace('mx-5', 'mx-2');
+            contentBox.classList.replace('p-5', 'p-3');
+            navbar.classList.replace('p-4', 'p-2');
+            navbar.classList.replace('mx-5', 'mx-2');
+            footer.classList.replace('mx-5', 'mx-2');
+        } else {
+            // Screen width is 650px or greater
+            contentBox.classList.replace('mx-2', 'mx-5');
+            contentBox.classList.replace('p-2', 'p-4');
+            navbar.classList.replace('p-3', 'p-5');
+            navbar.classList.replace('mx-2', 'mx-5');
+            footer.classList.replace('mx-2', 'mx-5');
+        }
+    }
+
+    const mediaQuery = window.matchMedia('(max-width: 650px)');
+    mediaQuery.addEventListener("change", handleScreenWidthChange);
+
+    // Initial check
+    handleScreenWidthChange(mediaQuery);
+
     const config = await (await fetch('/config.json')).json()
     const url = window.location.href
     const description = document.getElementById('description')
