@@ -43,10 +43,13 @@
         setInterval(updateDescription, 1000)
     }
 
-    const validateGmail = async (gmail) => {
-        const { response } = await (await fetch(`api/validateGmail?gmail=${gmail}`)).json()
-        return response
-    };
+    function validateGmail(email) {
+        // Regular expression pattern for Gmail validation
+        const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+        // Test the email against the regex pattern
+        return gmailRegex.test(email);
+    }
 
     const toggleValidation = async (element, option) => {
         const { classList } = element
