@@ -22,36 +22,37 @@
         </div>
     </nav>
     <div class="mx-5 bg-black bg-opacity-50 p-5 rounded-bottom-4 d-flex row-gap-4 flex-column mt-auto" id="contentBox">
-        <div class="modal" id="modal" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content bg-black">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Enter command</h5>
+    </div>
+    <div class="modal" id="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content bg-black">
+                <div class="modal-header">
+                    <h5 class="modal-title">Enter command</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="dropdown input-wrapper d-flex">
+                        <input class='form-control bg-light' type="text" id="suggestion-input" name="suggestion-input"
+                            autocomplete="off" style="--bs-bg-opacity: .1">
+                        <div class="suggestion" id="inline-suggestion"></div>
                     </div>
-                    <div class="modal-body">
-                        <div class="dropdown input-wrapper d-flex">
-                            <input class='form-control bg-light' type="text" id="suggestion-input"
-                                name="suggestion-input" autocomplete="off" style="--bs-bg-opacity: .1">
-                            <div class="suggestion" id="inline-suggestion"></div>
-                        </div>
-                        <div class="bg-light my-3 p-2 rounded d-flex flex-column row-gap-2" style="--bs-bg-opacity: .02" id="suggestion-box"></div>
-                    </div>
-                    <div class="modal-footer border border-0">
-                        <button type="button" class="btn btn-dark" id="submitButton">Enter</button>
-                    </div>
+                    <div class="bg-light my-3 p-2 rounded d-flex flex-column row-gap-2" style="--bs-bg-opacity: .02"
+                        id="suggestion-box"></div>
+                </div>
+                <div class="modal-footer border border-0">
+                    <button type="button" class="btn btn-dark" id="submitButton">Enter</button>
                 </div>
             </div>
         </div>
-        <div class="toast-container position-fixed bottom-0 end-0 p-3">
-            <div id="toast" class="toast bg-black bg-opacity-50" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header bg-black">
-                    <img src="assets/makima.gif" class="rounded me-2" width="20" height="20" alt="makima">
-                    <strong class="me-auto">M4sk</strong>
-                    <small>Notification</small>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body" id="notificationMessage">
-                </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toast" class="toast bg-black bg-opacity-50" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-black">
+                <img src="assets/makima.gif" class="rounded me-2" width="20" height="20" alt="makima">
+                <strong class="me-auto">M4sk</strong>
+                <small>Notification</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="notificationMessage">
             </div>
         </div>
     </div>

@@ -11,6 +11,7 @@ module.exports = async (req, res) => {
     const dateCompare = dateInData - Date.now() > 0
     if (dateCompare) return res.redirect('/support?cooldown')
     else cooldown.set(gmail, Date.now() + cooldownConfig)
+    res.redirect('/support?submitted')
     try {
         await rest.post(`/channels/${recieveSupportMessageChannel}/messages`, {
             body: {
@@ -35,5 +36,4 @@ module.exports = async (req, res) => {
     } catch (error) {
         console.error(error);
     }
-    res.redirect('/support?submitted')
 }
