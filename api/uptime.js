@@ -5,6 +5,8 @@
  */
 module.exports = async (req, res) => {
     const { secret } = req.query
-    if (secret === process.env.SECRET_KEY) console.log('SUCCESSFULY UPTIMED.')
-    res.redirect('/')
+    if (secret === process.env.SECRET_KEY) {
+        console.log('SUCCESSFULY UPTIMED.')
+        res.json({response: 'SUCCESSFULY UPTIMED.'})
+    }else res.redirect('/')
 }
