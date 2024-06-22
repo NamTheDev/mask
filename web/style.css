@@ -45,7 +45,3 @@ input[type="text"] {
 #textarea::-webkit-scrollbar {
     display: none;
 }
-
-.section {
-    margin: 0 200px
-}
