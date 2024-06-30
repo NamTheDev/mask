@@ -7,6 +7,13 @@
     const { ownerNicknames } = await (await fetch('/config.json')).json()
     const markdownsBox = document.getElementById('markdownsBox')
     const MarkdownDataArray = await (await fetch('/api/markdownData?folder=card')).json()
+    const card = document.getElementById('card')
+    card.addEventListener('mouseover', () => {
+        card.style.setProperty('--bs-bg-opacity', '.15')
+    })
+    card.addEventListener('mouseout', () => {
+        card.style.setProperty('--bs-bg-opacity', '.1')
+    })
     const converter = new showdown.Converter()
     for (const { name, content } of MarkdownDataArray) {
         markdownsBox.innerHTML += `<p class='text-secondary'>(${name})</p><p>${converter.makeHtml(content)}</p>`
@@ -32,7 +39,7 @@
 
     const mediaQuery = window.matchMedia('(max-width: 800px)');
     mediaQuery.addEventListener("change", handleScreenWidthChange);
-    
+
     // Initial check
     handleScreenWidthChange(mediaQuery);
 

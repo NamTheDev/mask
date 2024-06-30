@@ -45,3 +45,7 @@ input[type="text"] {
 #textarea::-webkit-scrollbar {
     display: none;
 }
+
+.card-transition {
+    transition: 500ms all;
+}

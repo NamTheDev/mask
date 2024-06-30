@@ -14,8 +14,8 @@
 
 <body data-bs-theme="dark" style="background-color: rgb(19, 18, 18); height: 100vh;">
     <div class="container-fluid d-flex">
-        <div class="d-flex flex-column mx-auto bg-light mt-5 mb-4 rounded-4"
-            style="max-width: 1000px; --bs-bg-opacity: .1">
+        <div class="d-flex flex-column mx-auto bg-light mt-5 mb-4 rounded-4 card-transition"
+            style="max-width: 1000px; --bs-bg-opacity: .1" id="card">
             <!-- section 1 -->
             <div class="d-flex justify-content-between p-5 mx-5 rounded-top-3 mt-5 column-gap-5 row-gap-5" id="profile">
                 <div class="d-flex flex-column" style="min-width: 200px;">
@@ -28,12 +28,19 @@
                     </div>
                 </div>
                 <span><img src="assets/beam.png" alt="Beam" width="300" height="300"
-                        class="object-fit-cover rounded-4"></span>
+                        class="rounded-4"></span>
             </div>
             <hr>
             <!-- section 2 -->
             <div class="d-flex p-5 rounded-bottom-3 flex-wrap" id="additional">
                 <div class="container-fluid" id="markdownsBox">
+                </div>
+            </div>
+            <hr>
+            <!-- section 3 -->
+            <div class="d-flex m-auto p-4 rounded-bottom-3 flex-wrap" id="additional">
+                <div class="mx-auto">
+                    <img src="assets/beamBanner.png" class="object-fit-fill rounded-4" alt="Beam banner" style="max-width: 100%; height: auto;">
                 </div>
             </div>
         </div>
