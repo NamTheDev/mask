@@ -1,5 +1,6 @@
 const header = document.getElementById('header');
 const contentBox = document.getElementById('contentBox');
+const buttonGroup = document.getElementById('buttonGroup');
 const navbar = document.getElementById('navbar');
 const footer = document.getElementById('footer');
 const botAvatar = document.getElementById('botAvatar')
@@ -10,6 +11,7 @@ function handleScreenWidthChange(event) {
       header.classList.add('flex-column', 'text-center');
       contentBox.classList.replace('mx-5', 'mx-2');
       contentBox.classList.replace('p-10', 'p-3');
+      buttonGroup.classList.replace('justify-content-start', 'justify-content-center');
       navbar.classList.replace('p-4', 'p-2');
       navbar.classList.replace('mx-5', 'mx-2');
       footer.classList.replace('mx-5', 'mx-2');
@@ -18,13 +20,14 @@ function handleScreenWidthChange(event) {
       header.classList.remove('flex-column', 'text-center');
       contentBox.classList.replace('mx-2', 'mx-5');
       contentBox.classList.replace('p-3', 'p-10');
+      buttonGroup.classList.replace('justify-content-center', 'justify-content-start');
       navbar.classList.replace('p-3', 'p-5');
       navbar.classList.replace('mx-2', 'mx-5');
       footer.classList.replace('mx-2', 'mx-5');
     }
   }
 
-  const mediaQuery = window.matchMedia('(max-width: 650px)');
+  const mediaQuery = window.matchMedia('(max-width: 700px)');
   mediaQuery.addEventListener("change", handleScreenWidthChange);
 
   // Initial check
