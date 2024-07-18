@@ -1,19 +1,19 @@
 (async () => {
-    const supportMessageBox = document.getElementById('textarea')
-    const gmailInput = document.getElementById('gmailInput')
-    const gmailInputBox = document.getElementById('gmailInputBox')
-    const submitButton = document.getElementById('submitButton')
-    const editButton = document.getElementById('editButton')
-    const returnButton = document.getElementById('returnButton')
+    const supportMessageBox = document.getElementById('textarea');
+    const gmailInput = document.getElementById('gmailInput');
+    const submitButton = document.getElementById('submitButton');
     const contentBox = document.getElementById('contentBox');
     const navbar = document.getElementById('navbar');
     const footer = document.getElementById('footer');
+    const alert = document.getElementById('alert');
+    const icon = document.getElementById('icon');
+    const alertDescription = document.getElementById('alertDescription');
 
     function handleScreenWidthChange(event) {
         if (event.matches) {
             // Screen width is less than 650px
             contentBox.classList.replace('mx-5', 'mx-2');
-            contentBox.classList.replace('p-5', 'p-3');
+            contentBox.classList.replace('p-4', 'p-2');
             navbar.classList.replace('p-4', 'p-2');
             navbar.classList.replace('mx-5', 'mx-2');
             footer.classList.replace('mx-5', 'mx-2');
@@ -35,41 +35,40 @@
 
     const config = await (await fetch('/config.json')).json()
     const url = window.location.href
-    const description = document.getElementById('description')
-    if (url.includes('?submitted')) {
-        submitButton.style.display = 'none';
-        supportMessageBox.style.display = 'none';
-        gmailInputBox.style.display = 'none';
-        returnButton.style.display = '';
-        description.textContent = 'Your submission has been delivered! Thank you for contacting us.'
 
-    } else if (url.includes('?failed')) {
-        submitButton.style.display = 'none';
-        supportMessageBox.style.display = 'none';
-        gmailInputBox.style.display = 'none';
-        editButton.style.display = '';
-        description.innerHTML = '<span class="text-danger">[INVALID gmail]</span> - your submission has not been sent.<br>Please check your gmail address carefully before submitting.'
-        editButton.addEventListener('click', () => {
-            window.location.href = '/support?edit'
-        })
-    } else if (url.includes('?edit')) {
-        gmailInput.value = localStorage.getItem('gmail')
-        supportMessageBox.value = localStorage.getItem('supportMessage')
-        gmailInput.classList.add('is-invalid')
+    function sendAlert(message, type, enable) {
+        const alertTypeRegex = /alert-(warning|danger|success|info)/;
+        const currentAlertType = alert.className.match(alertTypeRegex);
+        if (!enable) {
+            submitButton.toggleAttribute('disabled');
+
+            gmailInput.toggleAttribute('disabled');
+            gmailInput.classList.add('disabled');
+
+            supportMessageBox.toggleAttribute('disabled');
+            supportMessageBox.classList.add('disabled');
+        }
+        if (currentAlertType) {
+            alert.classList.remove(currentAlertType[0]);
+        }
+        icon.innerHTML = config.iconTypes[type]
+        alert.classList.add(`alert-${type}`);
+        alertDescription.innerHTML = message;
+        alert.style.opacity = '1';
+        alert.style.transform = '';
+    }
+    if (url.includes('?submitted')) {
+        sendAlert('Your submission has been delivered! Thank you for contacting us.', 'success')
 
     } else if (url.includes("?cooldown")) {
-        description.innerHTML = ''
-        submitButton.style.display = 'none';
-        supportMessageBox.style.display = 'none';
-        gmailInputBox.style.display = 'none';
-        async function updateDescription() {
-            const cooldown = await (await fetch(`api/getCooldown?gmail=${localStorage.getItem('gmail')}`)).json()
-            if (Number(cooldown.ms.replace('s', '').replace('m', '')) < 0) return window.location.href = '/support'
-            description.innerHTML = `<span class="text-warning">[ON COOLDOWN]</span> - your submission has not been sent. Please wait for ${cooldown.ms}.`
-        }
-        await updateDescription()
-        setInterval(updateDescription, 1000)
+        const cooldown = await (await fetch(`api/getCooldown?gmail=${localStorage.getItem('gmail')}`)).json()
+        if (Number(cooldown.ms.replace('s', '').replace('m', '')) < 0) return window.location.href = '/support'
+        sendAlert(`<span class="text-warning">[ON COOLDOWN]</span> - your submission has not been sent. Please wait for ${cooldown.ms}.`, 'warning')
+    } else {
+        sendAlert(`Write to our developer a suggestion, report or message if needed!`, 'info', true)
     }
+    const { status } = await (await fetch(`/api/onCooldown?gmail=${localStorage.getItem('gmail')}`)).json()
+    if (status && !window.location.href.includes('?cooldown')) return window.location.href = '?cooldown'
 
     function validateGmail(email) {
         // Regular expression pattern for Gmail validation

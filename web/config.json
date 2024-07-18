@@ -1,4 +1,19 @@
 {
     "supportMessageMaxValue": 100,
-    "ownerNicknames": ["Beam", "Namir", "Sharkboy", "Nambuger"]
+    "ownerNicknames": [
+        "Beam",
+        "Namir",
+        "Sharkboy",
+        "Nambuger"
+    ],
+    "iconTypes": {
+        "warning": "<i class=\"fa-solid fa-triangle-exclamation me-1\"></i>",
+        "danger": "<i class=\"fa-solid fa-triangle-exclamation me-1\"></i>",
+        "success": "<i class=\"fa-solid fa-check me-1\"></i>",
+        "info": "<i class=\"fa-solid fa-info-circle me-1\"></i>"
+    },
+    "redirect": {
+        "inviteBot": "https://discord.com/oauth2/authorize?client_id=1202507536838828083",
+        "supportServer": "https://discord.gg/Kq79AX9fHW"
+    }
 }

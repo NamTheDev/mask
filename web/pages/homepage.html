@@ -21,11 +21,15 @@
             <img src="assets/makima.png" alt="Makima" height="50" width="100" class="object-fit-cover rounded">
         </div>
     </nav>
-    <div class="mx-5 bg-black bg-opacity-50 p-5 rounded-bottom-4 d-flex row-gap-4 flex-column mt-auto" id="contentBox">
+    <div class="mx-5 bg-black bg-opacity-50 p-10 py-5 rounded-bottom-4 d-flex row-gap-4 flex-column mt-auto"
+        id="contentBox">
         <div class="d-flex justify-content-between column-gap-5 row-gap-4" id="header">
             <div>
                 <h1 class="display-1">M4sk</h1>
-                <h3>A discord bot made for fun.</h3>
+                <h3>A Discord bot made for fun.</h3>
+                <p style="max-width: 550px;" class="text-body-secondary">M4sk offers a variety of features designed for
+                    Discord users to have fun and share ideas globally, providing plenty of activities for everyone to
+                    enjoy!</p>
             </div>
             <div>
                 <img src="assets/makima.gif" alt="Makima" style="width: 200px; height: 200px;"
@@ -33,11 +37,13 @@
             </div>
         </div>
         <div id="buttonGroup" class="d-flex row-gap-2 column-gap-2 justify-content-center flex-wrap">
-            <button class="btn btn-link p-2 fw-bold fs-6" style="min-width: 100px" onclick="window.open('support')">
+            <button onclick="redirect('inviteBot')" class="btn hover border border-0 p-3 fw-bold fs-6"
+                style="background-color: #576cbb;"><i class="fa-brands fa-discord me-2"></i>Add to Discord</button>
+            <button class="btn btn-link p-3 fw-bold fs-6" onclick="redirect('supportServer')">
                 <i class="fa-solid fa-right-to-bracket me-2"></i>
                 Join support server
             </button>
-            <button class="btn btn-dark p-2 fw-bold fs-6" style="min-width: 100px"
+            <button class="btn bg-dark bg-opacity-50 hover border border-0 p-3 fw-bold fs-6"
                 onclick="window.location.href = 'commands'">
                 <i class="fa-solid fa-list me-2"></i>
                 Commands list

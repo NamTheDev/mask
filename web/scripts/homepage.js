@@ -9,7 +9,7 @@ function handleScreenWidthChange(event) {
       // Screen width is less than 650px
       header.classList.add('flex-column', 'text-center');
       contentBox.classList.replace('mx-5', 'mx-2');
-      contentBox.classList.replace('p-5', 'p-3');
+      contentBox.classList.replace('p-10', 'p-3');
       navbar.classList.replace('p-4', 'p-2');
       navbar.classList.replace('mx-5', 'mx-2');
       footer.classList.replace('mx-5', 'mx-2');
@@ -17,7 +17,7 @@ function handleScreenWidthChange(event) {
       // Screen width is 650px or greater
       header.classList.remove('flex-column', 'text-center');
       contentBox.classList.replace('mx-2', 'mx-5');
-      contentBox.classList.replace('p-2', 'p-4');
+      contentBox.classList.replace('p-3', 'p-10');
       navbar.classList.replace('p-3', 'p-5');
       navbar.classList.replace('mx-2', 'mx-5');
       footer.classList.replace('mx-2', 'mx-5');
@@ -29,3 +29,8 @@ function handleScreenWidthChange(event) {
 
   // Initial check
   handleScreenWidthChange(mediaQuery);
+
+  async function redirect(address) {
+    const {redirect} = await (await fetch('/config.json')).json()
+    window.open(redirect[address])
+  }

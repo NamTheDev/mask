@@ -23,25 +23,33 @@
     </nav>
     <div class="mx-5 bg-black bg-opacity-50 p-5 rounded-bottom-4 d-flex row-gap-4 flex-column mt-auto" id="contentBox">
         <h1 class="display-1">Support</h1>
-        <h6 id="description" class="fw-normal">Write us a message if you had any problems with our bot, we will reply to you ASAP!</h6>
+        <h6 id="description" class="fw-normal">Write us a message if you had any problems with our bot, we will reply to
+            you ASAP!</h6>
+        <div class="alert" role="alert" style="opacity: 0; transform: translateY(100px); transition: 1s all;"
+            id="alert">
+            <div><span id="icon"></span><span id="alertDescription"></span></div>
+        </div>
         <form id="form">
             <div class="mb-3" id="gmailInputBox">
-                <label for="gmailInput" class="form-label">gmail address</label>
-                <input type="gmail" class="form-control bg-dark bg-opacity-25" id="gmailInput" aria-describedby="gmailHelp" autocomplete="off">
+                <label id="gmailLabel" for="gmailInput" class="form-label bg-secondary bg-opacity-25 rounded p-2"><i
+                        class="fa-solid fa-at me-1"></i><b>Gmail</b></label>
+                <input type="gmail" class="form-control bg-dark bg-opacity-25" id="gmailInput"
+                    aria-describedby="gmailHelp" autocomplete="off">
                 <div id="gmailHelp" class="form-text">We'll never share your gmail with anyone else.</div>
                 <div id="validationMessage" class="invalid-feedback">
                     Please enter a valid Gmail.
-                  </div>
-              </div>
+                </div>
+            </div>
             <div class="mb-3">
-                    <textarea type='text' value="text" name='message' class="form-control bg-dark bg-opacity-25" id="textarea" placeholder="Your bot suck..." style="height: 150px;" autocomplete="off"></textarea>
-                    <div id="validationMessage" class="invalid-feedback">
-                        Please enter atleast 100 letters.
-                      </div>
+                <label id="textareaLabel" for="textarea" class="form-label bg-secondary bg-opacity-25 rounded p-2"><i
+                        class="fa-solid fa-comment me-1"></i><b>Message</b></label>
+                <textarea type='text' value="text" name='message' class="form-control bg-dark bg-opacity-25"
+                    id="textarea" placeholder="Your bot suck..." style="height: 150px;" autocomplete="off"></textarea>
+                <div id="validationMessage" class="invalid-feedback">
+                    Please enter atleast 100 letters.
+                </div>
             </div>
             <button type="button" class="btn btn-outline-light" id="submitButton">Submit</button>
-            <button type="button" class="btn btn-outline-light" id="returnButton" style="display: none;" onclick="window.location.href='/support'">Return</button>
-            <button type="button" class="btn btn-outline-light" id="editButton" style="display: none;">Edit</button>
         </form>
     </div>
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top mt-4 mx-5" id="footer">
