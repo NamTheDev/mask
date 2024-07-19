@@ -7,5 +7,6 @@ module.exports = {
     recieveSupportMessageChannel: '1242693881636720661',
     defaultColor: 15548997,
     cooldown: new textDatabase('reportSubmissionCooldown'),
+    consoleData: new textDatabase('consoleData'),
     cooldownConfig: ms('1 day')
 }
