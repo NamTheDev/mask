@@ -1,4 +1,5 @@
 (async () => {
+    // Element selectors
     const supportMessageBox = document.getElementById('textarea');
     const gmailInput = document.getElementById('gmailInput');
     const submitButton = document.getElementById('submitButton');
@@ -8,106 +9,135 @@
     const alert = document.getElementById('alert');
     const icon = document.getElementById('icon');
     const alertDescription = document.getElementById('alertDescription');
+    const footerLinks = document.getElementById('footerLinks')
 
+    let isFormChanged = false;
+    const mediaQuery = window.matchMedia('(max-width: 650px)');
+
+    // Load configuration
+    const config = await (await fetch('/config.json')).json();
+
+    // Media query handler
+    const defaultLinksText = [...footerLinks.getElementsByClassName('nav-item')].map(link => link.innerHTML)
     function handleScreenWidthChange(event) {
-        if (event.matches) {
-            // Screen width is less than 650px
-            contentBox.classList.replace('mx-5', 'mx-2');
-            contentBox.classList.replace('p-4', 'p-2');
-            navbar.classList.replace('p-4', 'p-2');
-            navbar.classList.replace('mx-5', 'mx-2');
-            footer.classList.replace('mx-5', 'mx-2');
+        const isSmallScreen = event.matches;
+        toggleClassList(contentBox, 'mx-5', 'mx-2', isSmallScreen);
+        toggleClassList(contentBox, 'p-4', 'p-2', isSmallScreen);
+        toggleClassList(navbar, 'p-5', 'p-2', isSmallScreen);
+        toggleClassList(navbar, 'mx-5', 'mx-2', isSmallScreen);
+        toggleClassList(footer, 'mx-5', 'mx-2', isSmallScreen);
+
+        if (isSmallScreen) {
+            var index = 0
+            for (const navitem of footerLinks.getElementsByClassName('nav-item')) {
+                const link = navitem.getElementsByClassName('nav-link').item(0)
+                link.innerHTML = config.footerIcons[index]
+                const icon = footerLinks.getElementsByClassName('fa-solid').item(index)
+                icon.classList.add('fs-5')
+                index += 1
+            }
+            footerLinks.classList.add('column-gap-2')
+            footerLinks.classList.add('me-1')
         } else {
-            // Screen width is 650px or greater
-            contentBox.classList.replace('mx-2', 'mx-5');
-            contentBox.classList.replace('p-2', 'p-4');
-            navbar.classList.replace('p-3', 'p-5');
-            navbar.classList.replace('mx-2', 'mx-5');
-            footer.classList.replace('mx-2', 'mx-5');
+            var index = 0
+            for (const navitem of footerLinks.getElementsByClassName('nav-item')) {
+                const link = navitem.getElementsByClassName('nav-link').item(0)
+                link.innerHTML = defaultLinksText[index]
+                index += 1
+            }
+            footerLinks.classList.remove('column-gap-2')
+            footerLinks.classList.remove('me-1')
         }
     }
 
-    const mediaQuery = window.matchMedia('(max-width: 650px)');
-    mediaQuery.addEventListener("change", handleScreenWidthChange);
+    function toggleClassList(element, largeClass, smallClass, isSmallScreen) {
+        element.classList.replace(isSmallScreen ? largeClass : smallClass, isSmallScreen ? smallClass : largeClass);
+    }
 
     // Initial check
     handleScreenWidthChange(mediaQuery);
+    mediaQuery.addEventListener("change", handleScreenWidthChange);
 
-    const config = await (await fetch('/config.json')).json()
-    const url = window.location.href
+    // Alert handler
+    function sendAlert(message, type, enableForm) {
+        toggleForm(enableForm);
 
-    function sendAlert(message, type, enable) {
         const alertTypeRegex = /alert-(warning|danger|success|info)/;
         const currentAlertType = alert.className.match(alertTypeRegex);
-        if (!enable) {
-            submitButton.toggleAttribute('disabled');
+        if (currentAlertType) alert.classList.remove(currentAlertType[0]);
 
-            gmailInput.toggleAttribute('disabled');
-            gmailInput.classList.add('disabled');
-
-            supportMessageBox.toggleAttribute('disabled');
-            supportMessageBox.classList.add('disabled');
-        }
-        if (currentAlertType) {
-            alert.classList.remove(currentAlertType[0]);
-        }
-        icon.innerHTML = config.iconTypes[type]
+        icon.innerHTML = config.iconTypes[type];
         alert.classList.add(`alert-${type}`);
         alertDescription.innerHTML = message;
         alert.style.opacity = '1';
         alert.style.transform = '';
     }
-    if (url.includes('?submitted')) {
-        sendAlert('Your submission has been delivered! Thank you for contacting us.', 'success')
 
-    } else if (url.includes("?cooldown")) {
-        const cooldown = await (await fetch(`api/getCooldown?gmail=${localStorage.getItem('gmail')}`)).json()
-        if (Number(cooldown.ms.replace('s', '').replace('m', '')) < 0) return window.location.href = '/support'
-        sendAlert(`<span class="text-warning">[ON COOLDOWN]</span> - your submission has not been sent. Please wait for ${cooldown.ms}.`, 'warning')
-    } else {
-        sendAlert(`Write to our developer a suggestion, report or message if needed!`, 'info', true)
+    function toggleForm(enable) {
+        [submitButton, gmailInput, supportMessageBox].forEach(element => {
+            element.toggleAttribute('disabled', !enable);
+            element.classList.toggle('disabled', !enable);
+        });
     }
-    const { status } = await (await fetch(`/api/onCooldown?gmail=${localStorage.getItem('gmail')}`)).json()
-    if (status && !window.location.href.includes('?cooldown')) return window.location.href = '?cooldown'
 
+    // URL handling
+    if (window.location.href.includes('?submitted')) {
+        sendAlert('Your submission has been delivered! Thank you for contacting us.', 'success');
+    } else if (window.location.href.includes("?cooldown")) {
+        const cooldown = await (await fetch(`api/getCooldown?gmail=${localStorage.getItem('gmail')}`)).json();
+        if (Number(cooldown.ms.replace('s', '').replace('m', '')) < 0) {
+            window.location.href = '/support';
+        } else {
+            sendAlert(`You can submit another submission after ${cooldown.ms}.`, 'warning');
+        }
+    } else {
+        sendAlert('Write to our developer a suggestion, report, or message if needed!', 'info', true);
+    }
+
+    // Email validation
     function validateGmail(email) {
-        // Regular expression pattern for Gmail validation
         const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
-
-        // Test the email against the regex pattern
         return gmailRegex.test(email);
     }
 
-    const toggleValidation = async (element, option) => {
-        const { classList } = element
-        const oppositeOfOption = option === 'valid' ? 'invalid' : 'valid'
-        classList.remove(`is-${oppositeOfOption}`)
-        classList.add(`is-${option}`)
+    async function toggleValidation(element, isValid) {
+        const oppositeClass = isValid ? 'is-invalid' : 'is-valid';
+        const currentClass = isValid ? 'is-valid' : 'is-invalid';
+        element.classList.remove(oppositeClass);
+        element.classList.add(currentClass);
     }
 
-    const checkIsValid = (element) => {
-        const { className } = element
-        return className.includes('is-valid')
+    function checkIsValid(element) {
+        return element.className.includes('is-valid');
     }
 
-    submitButton.addEventListener('click', async () => {
+    // Form submission handler
+    submitButton.addEventListener('click', () => {
         if (checkIsValid(gmailInput) && checkIsValid(supportMessageBox)) {
-            localStorage.setItem('gmail', gmailInput.value)
-            localStorage.setItem('supportMessage', supportMessageBox.value)
-            return window.location.href = `/api/submitSupport?message=${encodeURI(supportMessageBox.value)}&gmail=${encodeURI(gmailInput.value)}`
+            localStorage.setItem('gmail', gmailInput.value);
+            localStorage.setItem('supportMessage', supportMessageBox.value);
+            isFormChanged = false;
+            window.location.href = `/api/submitSupport?message=${encodeURI(supportMessageBox.value)}&gmail=${encodeURI(gmailInput.value)}`;
         }
-    })
+    });
 
+    // Input event listeners
     gmailInput.addEventListener('input', async () => {
-        const validation = await validateGmail(gmailInput.value)
-        if (validation)
-            toggleValidation(gmailInput, 'valid');
-        else toggleValidation(gmailInput, 'invalid');
-    })
+        isFormChanged = true;
+        const isValid = validateGmail(gmailInput.value);
+        await toggleValidation(gmailInput, isValid);
+    });
 
     supportMessageBox.addEventListener('input', () => {
-        if (supportMessageBox.value.length >= config.supportMessageMaxValue)
-            toggleValidation(supportMessageBox, 'valid');
-        else toggleValidation(supportMessageBox, 'invalid');
-    })
-})()
+        isFormChanged = true;
+        const isValid = supportMessageBox.value.length >= config.supportMessageMaxValue;
+        toggleValidation(supportMessageBox, isValid);
+    });
+
+    // Prompt unsaved changes
+    window.addEventListener('beforeunload', (event) => {
+        if (isFormChanged) {
+            event.preventDefault();
+        }
+    });
+})();

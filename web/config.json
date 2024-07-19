@@ -12,6 +12,7 @@
         "success": "<i class=\"fa-solid fa-check me-1\"></i>",
         "info": "<i class=\"fa-solid fa-info-circle me-1\"></i>"
     },
+    "footerIcons": ["<i class='fa-solid fa-house'></i>", "<i class='fa-solid fa-list'></i>", "<i class='fa-solid fa-circle-question'></i>"],
     "redirect": {
         "inviteBot": "https://discord.com/oauth2/authorize?client_id=1202507536838828083",
         "supportServer": "https://discord.gg/Kq79AX9fHW"
