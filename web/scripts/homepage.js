@@ -3,28 +3,40 @@ const contentBox = document.getElementById('contentBox');
 const buttonGroup = document.getElementById('buttonGroup');
 const navbar = document.getElementById('navbar');
 const footer = document.getElementById('footer');
-const botAvatar = document.getElementById('botAvatar')
+const botAvatar = document.getElementById('botAvatar');
+const footerLinks = document.getElementById('footerLinks');
 
-function handleScreenWidthChange(event) {
-    if (event.matches) {
-      // Screen width is less than 650px
-      header.classList.add('flex-column', 'text-center');
-      contentBox.classList.replace('mx-5', 'mx-2');
-      contentBox.classList.replace('p-10', 'p-3');
-      buttonGroup.classList.replace('justify-content-start', 'justify-content-center');
-      navbar.classList.replace('p-4', 'p-2');
-      navbar.classList.replace('mx-5', 'mx-2');
-      footer.classList.replace('mx-5', 'mx-2');
-    } else {
-      // Screen width is 650px or greater
-      header.classList.remove('flex-column', 'text-center');
-      contentBox.classList.replace('mx-2', 'mx-5');
-      contentBox.classList.replace('p-3', 'p-10');
-      buttonGroup.classList.replace('justify-content-center', 'justify-content-start');
-      navbar.classList.replace('p-3', 'p-5');
-      navbar.classList.replace('mx-2', 'mx-5');
-      footer.classList.replace('mx-2', 'mx-5');
-    }
+// Load configuration
+(async () => {
+  const config = await (await fetch('/config.json')).json();
+  const defaultLinksText = [...footerLinks.getElementsByClassName('nav-item')].map(link => link.innerHTML);
+
+  function toggleClassList(element, largeClass, smallClass, isSmallScreen) {
+    element.classList.replace(isSmallScreen ? largeClass : smallClass, isSmallScreen ? smallClass : largeClass);
+  }
+
+  function handleScreenWidthChange(event) {
+    const isSmallScreen = event.matches;
+    toggleClassList(contentBox, 'mx-5', 'mx-2', isSmallScreen);
+    toggleClassList(contentBox, 'p-10', 'p-3', isSmallScreen);
+    toggleClassList(navbar, 'p-4', 'p-2', isSmallScreen);
+    toggleClassList(navbar, 'mx-5', 'mx-2', isSmallScreen);
+    toggleClassList(footer, 'mx-5', 'mx-2', isSmallScreen);
+
+    header.classList.toggle('flex-column', isSmallScreen);
+    header.classList.toggle('text-center', isSmallScreen);
+    buttonGroup.classList.replace(isSmallScreen ? 'justify-content-start' : 'justify-content-center', isSmallScreen ? 'justify-content-center' : 'justify-content-start');
+
+    [...footerLinks.getElementsByClassName('nav-item')].forEach((navitem, index) => {
+      const link = navitem.getElementsByClassName('nav-link')[0];
+      link.innerHTML = isSmallScreen ? config.footerIcons[index] : defaultLinksText[index];
+      if (isSmallScreen) {
+        footerLinks.getElementsByClassName('fa-solid')[index].classList.add('fs-5');
+      }
+    });
+
+    footerLinks.classList.toggle('column-gap-2', isSmallScreen);
+    footerLinks.classList.toggle('me-1', isSmallScreen);
   }
 
   const mediaQuery = window.matchMedia('(max-width: 700px)');
@@ -32,8 +44,9 @@ function handleScreenWidthChange(event) {
 
   // Initial check
   handleScreenWidthChange(mediaQuery);
+})();
 
-  async function redirect(address) {
-    const {redirect} = await (await fetch('/config.json')).json()
-    window.open(redirect[address])
-  }
+async function redirect(address) {
+  const { redirect } = await (await fetch('/config.json')).json();
+  window.open(redirect[address]);
+}

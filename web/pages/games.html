@@ -23,33 +23,19 @@
     </nav>
     <div class="mx-5 bg-black bg-opacity-50 p-10 py-5 rounded-bottom-4 d-flex row-gap-4 flex-column mt-auto"
         id="contentBox">
-        <div class="d-flex justify-content-between column-gap-5 row-gap-4" id="header">
-            <div>
-                <h1 class="display-1">M4sk</h1>
-                <h3>A Discord bot made for fun.</h3>
-                <span style="max-width: 550px;" class="text-body-secondary">M4sk offers a variety of features designed
-                    for
-                    Discord users to have fun and share ideas globally, providing plenty of activities for everyone to
-                    enjoy!</span>
+        <div class="bg-secondary bg-opacity-25 p-2 rounded text-center">
+            <h1>Guess the number!</h1>
+            <div class="m-auto bg-black bg-opacity-50 d-inline-flex p-2 rounded flex-column row-gap-2" style="min-width: 200px;">
+                <div class="bg-light bg-opacity-25 rounded d-flex flex-row justify-content-between" id="numbersDisplayBox">
+                    <div class="bg-dark m-1 rounded" style="width: 30px; height: 25px; transition: 500ms all;">0</div>
+                    <div class="bg-dark m-1 rounded" style="width: 30px; height: 25px; transition: 500ms all;">0</div>
+                    <div class="bg-dark m-1 rounded" style="width: 30px; height: 25px; transition: 500ms all;">0</div>
+                    <div class="bg-dark m-1 rounded" style="width: 30px; height: 25px; transition: 500ms all;">0</div>
+                    <div class="bg-dark m-1 rounded" style="width: 30px; height: 25px; transition: 500ms all;">0</div>
+                    <div class="bg-dark m-1 rounded" style="width: 30px; height: 25px; transition: 500ms all;">0</div>
+                </div>
+                <input class="form-control bg-secondary-subtle bg-opacity-25" maxlength="6" id="GTN_inputNumber">
             </div>
-            <div>
-                <img src="assets/makima.gif" alt="Makima" style="width: 200px; height: 200px;"
-                    class="rounded-circle object-fit-cover rounded">
-            </div>
-        </div>
-        <div id="buttonGroup" class="d-flex row-gap-2 column-gap-2 justify-content-start flex-wrap">
-            <button onclick="redirect('inviteBot')" class="btn hover border border-0 p-3 fw-bold fs-6"
-                style="background-color: #4c5e9d;"><i class="fa-brands fa-discord me-2"></i>Add to Discord</button>
-            <button class="btn bg-secondary bg-opacity-25 hover border border-0 p-3 fw-bold fs-6"
-                onclick="redirect('supportServer')">
-                <i class="fa-solid fa-right-to-bracket me-2"></i>
-                Join support server
-            </button>
-            <button class="btn bg-secondary bg-opacity-25 hover border border-0 p-3 fw-bold fs-6"
-                onclick="window.location.href = 'commands'">
-                <i class="fa-solid fa-list me-2"></i>
-                Commands list
-            </button>
         </div>
     </div>
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top mt-4 mx-5" id="footer">
@@ -61,7 +47,7 @@
         </ul>
     </footer>
 </body>
-<script src="scripts/homepage.js"></script>
+<script src="scripts/games.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>

@@ -1,39 +1,58 @@
 (async () => {
-    const footer = document.getElementById('footer')
-    const subtitle = document.getElementById('subtitle')
-    const nicknamesBox = document.getElementById('nicknamesBox')
-    const profile = document.getElementById('profile')
-    const additional = document.getElementById('additional')
-    const { ownerNicknames } = await (await fetch('/config.json')).json()
-    const markdownsBox = document.getElementById('markdownsBox')
-    const MarkdownDataArray = await (await fetch('/api/markdownData?folder=card')).json()
-    const card = document.getElementById('card')
+    const footer = document.getElementById('footer');
+    const subtitle = document.getElementById('subtitle');
+    const nicknamesBox = document.getElementById('nicknamesBox');
+    const profile = document.getElementById('profile');
+    const additional = document.getElementById('additional');
+    const footerLinks = document.getElementById('footerLinks');
+    const { ownerNicknames, footerIcons } = await (await fetch('/config.json')).json();
+    const markdownsBox = document.getElementById('markdownsBox');
+    const MarkdownDataArray = await (await fetch('/api/markdownData?folder=card')).json();
+    const card = document.getElementById('card');
     card.addEventListener('mouseover', () => {
-        card.style.setProperty('--bs-bg-opacity', '.15')
-    })
+        card.style.setProperty('--bs-bg-opacity', '.15');
+    });
     card.addEventListener('mouseout', () => {
-        card.style.setProperty('--bs-bg-opacity', '.1')
-    })
-    const converter = new showdown.Converter()
+        card.style.setProperty('--bs-bg-opacity', '.1');
+    });
+    const converter = new showdown.Converter();
     for (const { name, content } of MarkdownDataArray) {
-        markdownsBox.innerHTML += `<p class='text-secondary'>(${name})</p><p>${converter.makeHtml(content)}</p>`
+        markdownsBox.innerHTML += `<p class='text-secondary'>(${name})</p><p>${converter.makeHtml(content)}</p>`;
+    }
+
+    const defaultLinksText = [...footerLinks.getElementsByClassName('nav-item')].map(link => link.innerHTML);
+
+    function toggleClassList(element, largeClass, smallClass, isSmallScreen) {
+        element.classList.replace(isSmallScreen ? largeClass : smallClass, isSmallScreen ? smallClass : largeClass);
     }
 
     function handleScreenWidthChange(event) {
-        if (event.matches) {
-            footer.classList.replace('mx-5', 'mx-2');
-            profile.classList.add('text-center');
-            profile.classList.add('flex-column');
-            profile.classList.replace('p-5', 'py-5');
-            profile.classList.replace('mx-5', 'mx-3');
-            additional.classList.replace('p-5', 'p-3');
+        const isSmallScreen = event.matches;
+        toggleClassList(footer, 'mx-5', 'mx-2', isSmallScreen);
+        toggleClassList(profile, 'p-5', 'py-5', isSmallScreen);
+        toggleClassList(profile, 'mx-5', 'mx-3', isSmallScreen);
+        toggleClassList(additional, 'p-5', 'p-3', isSmallScreen);
+
+        if (isSmallScreen) {
+            profile.classList.add('text-center', 'flex-column');
+            var index = 0;
+            for (const navitem of footerLinks.getElementsByClassName('nav-item')) {
+                const link = navitem.getElementsByClassName('nav-link').item(0);
+                link.innerHTML = footerIcons[index];
+                const icon = footerLinks.getElementsByClassName('fa-solid').item(index);
+                icon.classList.add('fs-5');
+                index += 1;
+            }
+            footerLinks.classList.add('column-gap-2', 'me-1');
         } else {
-            footer.classList.replace('mx-2', 'mx-5');
-            profile.classList.remove('text-center');
-            profile.classList.remove('flex-column');
-            profile.classList.replace('py-5', 'p-5');
-            profile.classList.replace('mx-3', 'mx-5');
-            additional.classList.replace('p-3', 'p-5');
+            profile.classList.remove('text-center', 'flex-column');
+            var index = 0;
+            for (const navitem of footerLinks.getElementsByClassName('nav-item')) {
+                const link = navitem.getElementsByClassName('nav-link').item(0);
+                link.innerHTML = defaultLinksText[index];
+                index += 1;
+            }
+            footerLinks.classList.remove('column-gap-2', 'me-1');
         }
     }
 
@@ -43,10 +62,10 @@
     // Initial check
     handleScreenWidthChange(mediaQuery);
 
-    const year = new Date().getFullYear() - 2009
-    subtitle.textContent = subtitle.textContent.replace('{age}', year)
+    const year = new Date().getFullYear() - 2009;
+    subtitle.textContent = subtitle.textContent.replace('{age}', year);
 
-    for (const nickame of ownerNicknames) {
-        nicknamesBox.innerHTML += `<div class='d-flex flex-wrap justify-content-center'><span class='bg-black bg-opacity-50 p-2 rounded fw-semibold' style='font-size: 14px'>${nickame}</span></div>`
+    for (const nickname of ownerNicknames) {
+        nicknamesBox.innerHTML += `<div class='d-flex flex-wrap justify-content-center'><span class='bg-black bg-opacity-50 p-2 rounded fw-semibold' style='font-size: 14px'>${nickname}</span></div>`;
     }
-})()
+})();

@@ -7,6 +7,7 @@
     const JSONDisplayBlock = document.getElementById('JSONDisplayBlock');
     const optionTypesElement = document.getElementById('optionTypes');
     const commandTypesElement = document.getElementById('commandTypes');
+    const footerLinks = document.getElementById('footerLinks');
     const JSONModal = new bootstrap.Modal(document.getElementById('JSONModal'), {
         backdrop: 'static',
         keyboard: false
@@ -18,19 +19,42 @@
         "User", "Channel", "Role", "Mentionable", "Number", "Attachment"
     ];
 
+    const config = await (await fetch('/config.json')).json();
+
+    const defaultLinksText = [...footerLinks.getElementsByClassName('nav-item')].map(link => link.innerHTML);
+
+    function toggleClassList(element, largeClass, smallClass, isSmallScreen) {
+        element.classList.replace(isSmallScreen ? largeClass : smallClass, isSmallScreen ? smallClass : largeClass);
+    }
+
     function handleScreenWidthChange(event) {
-        if (event.matches) {
-            contentBox.classList.replace('mx-5', 'mx-3');
-            contentBox.classList.replace('p-5', 'p-2');
-            commandsBox.classList.replace('mx-5', 'mx-3');
-            navbar.classList.replace('mx-5', 'mx-3');
-            footer.classList.replace('mx-5', 'mx-3');
+        const isSmallScreen = event.matches;
+        toggleClassList(contentBox, 'mx-5', 'mx-3', isSmallScreen);
+        toggleClassList(contentBox, 'p-5', 'p-2', isSmallScreen);
+        toggleClassList(commandsBox, 'mx-5', 'mx-3', isSmallScreen);
+        toggleClassList(navbar, 'mx-5', 'mx-3', isSmallScreen);
+        toggleClassList(footer, 'mx-5', 'mx-3', isSmallScreen);
+
+        if (isSmallScreen) {
+            var index = 0;
+            for (const navitem of footerLinks.getElementsByClassName('nav-item')) {
+                const link = navitem.getElementsByClassName('nav-link').item(0);
+                link.innerHTML = config.footerIcons[index];
+                const icon = footerLinks.getElementsByClassName('fa-solid').item(index);
+                icon.classList.add('fs-5');
+                index += 1;
+            }
+            footerLinks.classList.add('column-gap-2');
+            footerLinks.classList.add('me-1');
         } else {
-            contentBox.classList.replace('mx-3', 'mx-5');
-            contentBox.classList.replace('p-2', 'p-5');
-            commandsBox.classList.replace('mx-3', 'mx-5');
-            navbar.classList.replace('mx-3', 'mx-5');
-            footer.classList.replace('mx-3', 'mx-5');
+            var index = 0;
+            for (const navitem of footerLinks.getElementsByClassName('nav-item')) {
+                const link = navitem.getElementsByClassName('nav-link').item(0);
+                link.innerHTML = defaultLinksText[index];
+                index += 1;
+            }
+            footerLinks.classList.remove('column-gap-2');
+            footerLinks.classList.remove('me-1');
         }
     }
 
@@ -40,7 +64,7 @@
     // Initial check
     handleScreenWidthChange(mediaQuery);
 
-    let delay = 0
+    let delay = 0;
     async function appendCommandCard(command, index) {
         const { name, description, type } = command;
         const optionTypes = OPTION_TYPES.map((opt, i) => `${i + 1} = ${opt}`).join('\n');
@@ -64,8 +88,8 @@
                 View JSON data
             </button>`;
         commandCard.style.width = '250px';
-        delay += index + 1 * 100
-        commandCard.style.setProperty('--transition-delay', `${delay}ms`)
+        delay += index + 1 * 100;
+        commandCard.style.setProperty('--transition-delay', `${delay}ms`);
         commandsBox.appendChild(commandCard);
 
         // Add the visible class after a short delay
@@ -73,6 +97,7 @@
             commandCard.classList.add('visible');
         }, 200);
     }
+
     async function initializeCommands() {
         for (const [index, command] of commands.entries()) {
             await appendCommandCard(command, index);

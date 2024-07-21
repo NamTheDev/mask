@@ -7,6 +7,10 @@
     const contentBox = document.getElementById('contentBox');
     const navbar = document.getElementById('navbar');
     const suggestionsBox = document.getElementById('suggestion-box')
+    const consoleBoard = document.getElementById('console')
+    const key =  window.location.href.split('?key=')[1]
+    const {data} = await (await fetch(`api/getConsoleData?key=${key}`)).json()
+    consoleBoard.innerHTML = data
 
     function handleScreenWidthChange(event) {
         if (event.matches) {
@@ -30,7 +34,6 @@
     // Initial check
     handleScreenWidthChange(mediaQuery);
     if (localStorage.getItem('UserLoggedIn') !== 'yes') {
-        let key = prompt('Enter key')
         if (key) {
             const response = await fetch(`api/verifyOwner`, {
                 headers: { key }
