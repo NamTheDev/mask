@@ -8,8 +8,28 @@
     const navbar = document.getElementById('navbar');
     const suggestionsBox = document.getElementById('suggestion-box')
     const consoleBoard = document.getElementById('console')
-    const key =  window.location.href.split('?key=')[1]
-    const {data} = await (await fetch(`api/getConsoleData?key=${key}`)).json()
+    const key = window.location.href.split('?key=')[1]
+    if (localStorage.getItem('UserLoggedIn') !== 'yes') {
+        if (key) {
+            const response = await fetch(`api/verifyOwner`, {
+                headers: { key }
+            });
+            const data = await response.json();
+            if (data.status === 'success') {
+                localStorage.setItem('UserLoggedIn', 'yes')
+                return window.location.reload()
+            }
+        }
+        window.location.href = '/'
+    } else {
+        if (!key) {
+            localStorage.setItem('UserLoggedIn', 'no')
+            return window.location.reload()
+        }
+        message.textContent = 'Welcome back, Nam!'
+        await toast.show()
+    }
+    const { data } = await (await fetch(`api/getConsoleData?key=${key}`)).json()
     consoleBoard.innerHTML = data
 
     function handleScreenWidthChange(event) {
@@ -33,23 +53,6 @@
 
     // Initial check
     handleScreenWidthChange(mediaQuery);
-    if (localStorage.getItem('UserLoggedIn') !== 'yes') {
-        if (key) {
-            const response = await fetch(`api/verifyOwner`, {
-                headers: { key }
-            });
-            const data = await response.json();
-            if (data.status === 'success') {
-                localStorage.setItem('UserLoggedIn', 'yes')
-                return window.location.reload()
-            }
-        }
-        window.location.href = '/'
-    } else {
-        message.textContent = 'Welcome back, Nam!'
-        await toast.show()
-    }
-
 
     window.addEventListener('keydown', async (KEY) => {
         const { ctrlKey, key } = KEY
