@@ -8,7 +8,7 @@ const { consoleData } = require("../config")
 module.exports = async (req, res) => {
     const {key} = req.query
     if(key !== process.env.SECRET_KEY) return;
-    const data = await consoleData.getAll()
+    const {data} = consoleData
     if (data.length > 0) {
         res.json({ data: data.map(({ key, value }) => `<b>${key}</b>: ${value}<br>`).join('\n') })
     } else {
