@@ -5,16 +5,19 @@
     const profile = document.getElementById('profile');
     const additional = document.getElementById('additional');
     const footerLinks = document.getElementById('footerLinks');
-    const { ownerNicknames, footerIcons } = await (await fetch('/config.json')).json();
+    const videos = document.getElementById('videos');
+    const { ownerNicknames, footerIcons, videoIDs } = await (await fetch('/config.json')).json();
     const markdownsBox = document.getElementById('markdownsBox');
     const MarkdownDataArray = await (await fetch('/api/markdownData?folder=card')).json();
     const card = document.getElementById('card');
+    
     card.addEventListener('mouseover', () => {
         card.style.setProperty('--bs-bg-opacity', '.15');
     });
     card.addEventListener('mouseout', () => {
         card.style.setProperty('--bs-bg-opacity', '.1');
     });
+
     const converter = new showdown.Converter();
     for (const { name, content } of MarkdownDataArray) {
         markdownsBox.innerHTML += `<p class='text-secondary'>(${name})</p><p>${converter.makeHtml(content)}</p>`;
@@ -68,4 +71,30 @@
     for (const nickname of ownerNicknames) {
         nicknamesBox.innerHTML += `<div class='d-flex flex-wrap justify-content-center'><span class='bg-black bg-opacity-50 p-2 rounded fw-semibold' style='font-size: 14px'>${nickname}</span></div>`;
     }
+
+    const generateIframeHTML = (videoID) => {
+        return `<div class="carousel-item"><iframe class='object-fit-fill' src="https://www.youtube.com/embed/${videoID}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>`;
+    };
+
+    function insertVideos(videoIDs) {
+        const videosDiv = document.getElementById('videos');
+        videoIDs.forEach(videoID => {
+            const iframeHTML = generateIframeHTML(videoID);
+            videosDiv.innerHTML += iframeHTML;
+        });
+        videos.firstElementChild.classList.add('active');
+        adjustIframeSizes();
+    }
+
+    function adjustIframeSizes() {
+        const iframes = document.querySelectorAll('iframe');
+        iframes.forEach(iframe => {
+            iframe.style.width = window.innerWidth < 1000 ? '100%' : '1000px';
+            iframe.style.height = window.innerWidth < 1000 ? `${(window.innerWidth / 1000) * 500}px` : '500px';
+        });
+    }
+
+    window.addEventListener('resize', adjustIframeSizes);
+
+    insertVideos(videoIDs);
 })();

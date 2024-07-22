@@ -16,5 +16,14 @@
     "redirect": {
         "inviteBot": "https://discord.com/oauth2/authorize?client_id=1202507536838828083",
         "supportServer": "https://discord.gg/Kq79AX9fHW"
-    }
+    },
+    "videoIDs": [
+        "3NZ7WlffkWY",
+        "zt2kS3zKKvQ",
+        "zkjrEt1VWbs",
+        "Hdk7zulaCC4",
+        "e6z2sXjbFGw",
+        "FGFdEE5VzSY",
+        "O-mmP82onKY"
+    ]
 }
