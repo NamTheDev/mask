@@ -58,7 +58,7 @@ input[type="text"] {
 }
 
 .hover {
-    transition: 500ms all;
+    transition: 200ms ease-in-out all;
     outline: solid 2px rgba(255, 255, 255, 0);
     outline-offset: 0px;
 }
@@ -99,5 +99,24 @@ iframe {
     width: 100%;
     max-width: 950px;
     height: auto;
-    aspect-ratio: 2 / 1; /* This keeps the aspect ratio of 1000x500 */
+    aspect-ratio: 2 / 1;
+    /* This keeps the aspect ratio of 1000x500 */
+}
+
+#thumbnail {
+    transition: 300ms ease-in-out all;
+    outline: solid 5px;
+    outline-offset: 2px;
+    box-shadow: 0px 0px 0px white;
+}
+
+#thumbnail:hover {
+    outline-offset: 15px;
+    box-shadow: 0px 0px 30px white;
+}
+
+#profile {
+    background-image: url('assets/redGradient.gif');
+    background-size: cover;
+    background-repeat: no-repeat;
 }

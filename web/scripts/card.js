@@ -4,6 +4,7 @@
     const nicknamesBox = document.getElementById('nicknamesBox');
     const profile = document.getElementById('profile');
     const additional = document.getElementById('additional');
+    const header = document.getElementById('header');
     const footerLinks = document.getElementById('footerLinks');
     const videos = document.getElementById('videos');
     const { ownerNicknames, footerIcons, videoIDs } = await (await fetch('/config.json')).json();
@@ -31,6 +32,7 @@
 
     function handleScreenWidthChange(event) {
         const isSmallScreen = event.matches;
+        toggleClassList(header, 'rounded-3', 'py-4', isSmallScreen)
         toggleClassList(footer, 'mx-5', 'mx-2', isSmallScreen);
         toggleClassList(profile, 'p-5', 'py-5', isSmallScreen);
         toggleClassList(profile, 'mx-5', 'mx-3', isSmallScreen);
