@@ -85,34 +85,12 @@ input[type="text"] {
     padding: 0px 100px;
 }
 
-.custom-cursor {
-    width: 20px;
-    height: 20px;
-    background-color: red;
-    border-radius: 50%;
-    position: absolute;
-    pointer-events: none;
-    transition: transform 0.1s ease;
-}
-
 iframe {
     width: 100%;
     max-width: 950px;
     height: auto;
     aspect-ratio: 2 / 1;
     /* This keeps the aspect ratio of 1000x500 */
-}
-
-#thumbnail {
-    transition: 300ms ease-in-out all;
-    outline: solid 5px;
-    outline-offset: 2px;
-    box-shadow: 0px 0px 0px white;
-}
-
-#thumbnail:hover {
-    outline-offset: 15px;
-    box-shadow: 0px 0px 30px white;
 }
 
 #profile {
