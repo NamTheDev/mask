@@ -12,7 +12,11 @@
         "success": "<i class=\"fa-solid fa-check me-1\"></i>",
         "info": "<i class=\"fa-solid fa-info-circle me-1\"></i>"
     },
-    "footerIcons": ["<i class='fa-solid fa-house'></i>", "<i class='fa-solid fa-list'></i>", "<i class='fa-solid fa-circle-question'></i>"],
+    "footerIcons": [
+        "<i class='fa-solid fa-house'></i>",
+        "<i class='fa-solid fa-list'></i>",
+        "<i class='fa-solid fa-circle-question'></i>"
+    ],
     "redirect": {
         "inviteBot": "https://discord.com/oauth2/authorize?client_id=1202507536838828083",
         "supportServer": "https://discord.gg/Kq79AX9fHW"
@@ -25,5 +29,22 @@
         "e6z2sXjbFGw",
         "FGFdEE5VzSY",
         "O-mmP82onKY"
+    ],
+    "features": [
+        {
+            "icon": "fa-solid fa-face-laugh-squint",
+            "title": "Fun",
+            "content": "M4sk provides a lot of fun and utility commands. There are also economy, rpg adventure game system as well."
+        },
+        {
+            "icon": "fa-solid fa-exclamation",
+            "title": "Security",
+            "content": "M4sk can warn you about users with bad reputation with the ULTIMATE report system & database!"
+        },
+        {
+            "icon": "fa-solid fa-palette",
+            "title": "Simple & easy to customize",
+            "content": "M4sk provides simple and customizable responses, embeds, primary & secondary colors... (which can mainly be edited in dashboard). Not so much steps, ya know!"
+        }
     ]
 }

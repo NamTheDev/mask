@@ -1,24 +1,28 @@
-(async () => {
-    const navbar = document.getElementById('navbar');
-    const footer = document.getElementById('footer');
-    const contentBox = document.getElementById('contentBox');
-    const commandsBox = document.getElementById('commandsBox');
-    const JSONButtons = document.getElementsByName('JSONButton');
-    const JSONDisplayBlock = document.getElementById('JSONDisplayBlock');
-    const optionTypesElement = document.getElementById('optionTypes');
-    const commandTypesElement = document.getElementById('commandTypes');
-    const footerLinks = document.getElementById('footerLinks');
-    const JSONModal = new bootstrap.Modal(document.getElementById('JSONModal'), {
-        backdrop: 'static',
-        keyboard: false
-    });
-    const commands = await (await fetch('api/commands')).json();
-    const COMMAND_TYPES = ['Chat Input', 'User', 'Message'];
-    const OPTION_TYPES = [
-        "Sub Command", "Sub Command Group", "String", "Integer", "Boolean",
-        "User", "Channel", "Role", "Mentionable", "Number", "Attachment"
-    ];
+const searchInput = document.getElementById('searchInput')
+const navbar = document.getElementById('navbar');
+const footer = document.getElementById('footer');
+const contentBox = document.getElementById('contentBox');
+const commandsBox = document.getElementById('commandsBox');
+const JSONButtons = document.getElementsByName('JSONButton');
+const JSONDisplayBlock = document.getElementById('JSONDisplayBlock');
+const optionTypesElement = document.getElementById('optionTypes');
+const commandTypesElement = document.getElementById('commandTypes');
+const searchButton = document.getElementById('searchIcon')
+const footerLinks = document.getElementById('footerLinks');
+const titles = document.getElementsByName('title');
+const commandNames = document.getElementsByName('commandName')
+const JSONModal = new bootstrap.Modal(document.getElementById('JSONModal'), {
+    backdrop: 'static',
+    keyboard: false
+});
+const COMMAND_TYPES = ['Chat Input', 'User', 'Message'];
+const OPTION_TYPES = [
+    "Sub Command", "Sub Command Group", "String", "Integer", "Boolean",
+    "User", "Channel", "Role", "Mentionable", "Number", "Attachment"
+];
 
+(async () => {
+    const commands = await (await fetch('api/commands')).json();
     const config = await (await fetch('/config.json')).json();
 
     const defaultLinksText = [...footerLinks.getElementsByClassName('nav-item')].map(link => link.innerHTML);
@@ -73,8 +77,8 @@
         const commandCard = document.createElement('div');
         commandCard.className = 'bg-dark bg-opacity-25 rounded p-4 d-flex flex-column command-card';
         commandCard.innerHTML = `
-            <h2>
-                <span class="text-secondary-emphasis" style="font-size: 24px">${index + 1}. </span>${name}
+            <h2 name="title">
+                <span class="text-secondary-emphasis" style="font-size: 24px">${index + 1}. </span><span name="commandName">${name}</span>
             </h2>
             <h5 class="text-secondary">${COMMAND_TYPES[Number(type) - 1]}</h5>
             <p>${description}</p>
@@ -94,11 +98,26 @@
 
         // Add the visible class after a short delay
         setTimeout(() => {
+            commandCard.classList.remove('hidden');
             commandCard.classList.add('visible');
         }, 200);
     }
+    let delayFade = 0;
+    async function fadeCommandCards() {
+        [...commandsBox.children].forEach((commandCard, index) => {
+            commandCard
+            delayFade += index + 1 * 100;
+            commandCard.style.setProperty('--transition-delay', `${delayFade}ms`);
+            commandCard.classList.add('hidden');
+            commandCard.classList.remove('visible');
+            setTimeout(() => { 
+                commandCard.remove()
+            }, delayFade*1.5)
+        })
+        delayFade = 0;
+    }
 
-    async function initializeCommands() {
+    async function initializeCommands(commands) {
         for (const [index, command] of commands.entries()) {
             await appendCommandCard(command, index);
         }
@@ -122,5 +141,43 @@
         }
     }
 
-    initializeCommands();
+    initializeCommands(commands);
+
+    async function search() {
+        const { value } = searchInput;
+        if (!value) {
+            if(commandsBox.childElementCount <= 0) {
+                commandsBox.innerHTML = ''
+                await initializeCommands(commands);
+            }
+        };
+
+        const regex = new RegExp(`(${value})`, 'gi');
+        const listOfCommandsCard = commandsBox.children;
+
+        for (const commandCard of listOfCommandsCard) {
+            if (commandCard.nodeType !== 1) return; // Skip non-element nodes
+
+            const titleElement = commandCard.querySelector('[name="title"]');
+            if (titleElement && regex.test(titleElement.textContent)) {
+                // Highlighting logic
+                const highlightedText = titleElement.textContent.split(regex).map(part => {
+                    if (regex.test(part)) {
+                        return `<span class="bg-secondary bg-opacity-25">${part}</span>`;
+                    }
+                    return part;
+                }).join('');
+
+                // Update the title's innerHTML
+                titleElement.innerHTML = highlightedText;
+                const filteredCommands = commands.filter(({ name }) => name.startsWith(value))
+                fadeCommandCards().then(async () => {
+                    await initializeCommands(filteredCommands)
+                })
+            }
+        };
+    }
+
+    searchButton.onclick = search;
+    searchInput.onkeydown = ({ key }) => key && key === 'Enter' ? search() : null;
 })();

@@ -1,32 +1,32 @@
 [
     {
-        "name": "hi",
-        "description": "say hi to someone",
+        "name": "john",
+        "description": "say hi to John",
         "type": 1,
         "options": [
             {
-                "name": "dumbass",
-                "description": "say hi to someone who is dumb",
-                "type": 2,
-                "options": [
-                    {
-                        "name": "hi",
-                        "type": 1,
-                        "description": "say hi to someone who is dumb"
-                    }
-                ]
-            },
-            {
-                "name": "smartass",
-                "description": "say hi to someone who is smart",
+                "name": "doe",
+                "description": "say hi to John Doe",
                 "type": 2,
                 "options": [
                     {
                         "name": "hello",
                         "type": 1,
-                        "description":"say hi to someone who is smart",
+                        "description": "say hi to John Doe"
+                    }
+                ]
+            },
+            {
+                "name": "smith",
+                "description": "say hi to John Smith",
+                "type": 2,
+                "options": [
+                    {
+                        "name": "greetings",
+                        "type": 1,
+                        "description": "say hi to John Smith",
                         "options": [{
-                            "name": "user",
+                            "name": "target",
                             "type": 3,
                             "description": "target to say hi"
                         }]
@@ -36,58 +36,58 @@
         ]
     },
     {
-        "name": "hi",
-        "description": "say hi to someone",
+        "name": "jane",
+        "description": "say hi to Jane",
         "type": 1
     },
     {
-        "name": "hi",
-        "description": "say hi to someone",
+        "name": "mike",
+        "description": "say hi to Mike",
         "type": 1
     },
     {
-        "name": "hi",
-        "description": "say hi to someone",
+        "name": "emily",
+        "description": "say hi to Emily",
         "type": 1
     },
     {
-        "name": "hi",
-        "description": "say hi to someone",
+        "name": "sarah",
+        "description": "say hi to Sarah",
         "type": 1
     },
     {
-        "name": "hi",
-        "description": "say hi to someone",
+        "name": "daniel",
+        "description": "say hi to Daniel",
         "type": 1
     },
     {
-        "name": "hi",
-        "description": "say hi to someone",
+        "name": "anna",
+        "description": "say hi to Anna",
         "type": 1
     },
     {
-        "name": "hi",
-        "description": "say hi to someone",
+        "name": "peter",
+        "description": "say hi to Peter",
         "type": 1
     },
     {
-        "name": "hi",
-        "description": "say hi to someone",
+        "name": "laura",
+        "description": "say hi to Laura",
         "type": 1
     },
     {
-        "name": "hi",
-        "description": "say hi to someone",
+        "name": "james",
+        "description": "say hi to James",
         "type": 1
     },
     {
-        "name": "hi",
-        "description": "say hi to someone",
+        "name": "lucas",
+        "description": "say hi to Lucas",
         "type": 1
     },
     {
-        "name": "hi",
-        "description": "say hi to someone",
+        "name": "olivia",
+        "description": "say hi to Olivia",
         "type": 1
     }
 ]

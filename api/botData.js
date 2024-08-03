@@ -8,31 +8,22 @@ const { rest, botID } = require("../config");
  */
 module.exports = async (req, res) => {
     try {
-        const { requested } = req.query;
         
-        const [serverCount, userCount, botData] = await Promise.all([
+        const [serverCount, userCount, commandCount, botData] = await Promise.all([
             rest.get(Routes.userGuilds()).then(guilds => guilds.length),
             rest.get(Routes.userConnections()).then(connections => connections.length),
+            rest.get(Routes.applicationCommands(botID)).then(commands => commands.length),
             rest.get('/applications/@me')
         ]);
-
-        const botAvatarURL = `https://cdn.discordapp.com/avatars/${botID}/${botData.bot.avatar}.gif?size=4096`;
 
         const data = {
             serverCount,
             userCount,
-            botAvatarURL
+            commandCount,
+            botData
         };
 
-        if (requested in data) {
-            if (typeof data[requested] === 'number') {
-                res.json({ count: data[requested] });
-            } else {
-                res.redirect(data[requested]);
-            }
-        } else {
-            res.status(400).json({ error: "Invalid request" });
-        }
+       res.json(data)
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
     }

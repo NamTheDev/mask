@@ -5,7 +5,6 @@
     const input = document.getElementById('suggestion-input');
     const suggestionBox = document.getElementById('inline-suggestion');
     const contentBox = document.getElementById('contentBox');
-    const navbar = document.getElementById('navbar');
     const suggestionsBox = document.getElementById('suggestion-box')
     const consoleBoard = document.getElementById('console')
     const key = window.location.href.split('?key=')[1]
@@ -37,14 +36,10 @@
             // Screen width is less than 650px
             contentBox.classList.replace('mx-5', 'mx-2');
             contentBox.classList.replace('p-5', 'p-3');
-            navbar.classList.replace('p-4', 'p-2');
-            navbar.classList.replace('mx-5', 'mx-2');
         } else {
             // Screen width is 650px or greater
             contentBox.classList.replace('mx-2', 'mx-5');
             contentBox.classList.replace('p-2', 'p-4');
-            navbar.classList.replace('p-3', 'p-5');
-            navbar.classList.replace('mx-2', 'mx-5');
         }
     }
 
