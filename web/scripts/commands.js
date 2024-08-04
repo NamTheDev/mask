@@ -1,27 +1,26 @@
-const searchInput = document.getElementById('searchInput')
-const navbar = document.getElementById('navbar');
-const footer = document.getElementById('footer');
-const contentBox = document.getElementById('contentBox');
-const commandsBox = document.getElementById('commandsBox');
-const JSONButtons = document.getElementsByName('JSONButton');
-const JSONDisplayBlock = document.getElementById('JSONDisplayBlock');
-const optionTypesElement = document.getElementById('optionTypes');
-const commandTypesElement = document.getElementById('commandTypes');
-const searchButton = document.getElementById('searchIcon')
-const footerLinks = document.getElementById('footerLinks');
-const titles = document.getElementsByName('title');
-const commandNames = document.getElementsByName('commandName')
-const JSONModal = new bootstrap.Modal(document.getElementById('JSONModal'), {
-    backdrop: 'static',
-    keyboard: false
-});
-const COMMAND_TYPES = ['Chat Input', 'User', 'Message'];
-const OPTION_TYPES = [
-    "Sub Command", "Sub Command Group", "String", "Integer", "Boolean",
-    "User", "Channel", "Role", "Mentionable", "Number", "Attachment"
-];
-
 (async () => {
+    const searchInput = document.getElementById('searchInput')
+    const navbar = document.getElementById('navbar');
+    const footer = document.getElementById('footer');
+    const contentBox = document.getElementById('contentBox');
+    const commandsBox = document.getElementById('commandsBox');
+    const JSONButtons = document.getElementsByName('JSONButton');
+    const JSONDisplayBlock = document.getElementById('JSONDisplayBlock');
+    const optionTypesElement = document.getElementById('optionTypes');
+    const commandTypesElement = document.getElementById('commandTypes');
+    const searchButton = document.getElementById('searchIcon')
+    const footerLinks = document.getElementById('footerLinks');
+    const commandNames = document.getElementsByName('commandName')
+    const JSONModal = new bootstrap.Modal(document.getElementById('JSONModal'), {
+        backdrop: 'static',
+        keyboard: false
+    });
+    const COMMAND_TYPES = ['Chat Input', 'User', 'Message'];
+    const OPTION_TYPES = [
+        "Sub Command", "Sub Command Group", "String", "Integer", "Boolean",
+        "User", "Channel", "Role", "Mentionable", "Number", "Attachment"
+    ];
+
     const commands = await (await fetch('api/commands')).json();
     const config = await (await fetch('/config.json')).json();
 
@@ -66,7 +65,6 @@ const OPTION_TYPES = [
     mediaQuery.addEventListener("change", handleScreenWidthChange);
 
     // Initial check
-    handleScreenWidthChange(mediaQuery);
 
     let delay = 0;
     async function appendCommandCard(command, index) {
@@ -102,26 +100,11 @@ const OPTION_TYPES = [
             commandCard.classList.add('visible');
         }, 200);
     }
-    let delayFade = 0;
-    async function fadeCommandCards() {
-        [...commandsBox.children].forEach((commandCard, index) => {
-            commandCard
-            delayFade += index + 1 * 100;
-            commandCard.style.setProperty('--transition-delay', `${delayFade}ms`);
-            commandCard.classList.add('hidden');
-            commandCard.classList.remove('visible');
-            setTimeout(() => { 
-                commandCard.remove()
-            }, delayFade*1.5)
-        })
-        delayFade = 0;
-    }
 
-    async function initializeCommands(commands) {
+    async function initializeCommands(commands, transitionToggle) {
         for (const [index, command] of commands.entries()) {
             await appendCommandCard(command, index);
         }
-
         for (const button of JSONButtons) {
             button.addEventListener('click', () => {
                 const json = button.getAttribute('json');
@@ -141,12 +124,10 @@ const OPTION_TYPES = [
         }
     }
 
-    initializeCommands(commands);
-
     async function search() {
         const { value } = searchInput;
         if (!value) {
-            if(commandsBox.childElementCount <= 0) {
+            if (commandsBox.childElementCount <= 0) {
                 commandsBox.innerHTML = ''
                 await initializeCommands(commands);
             }
@@ -171,13 +152,14 @@ const OPTION_TYPES = [
                 // Update the title's innerHTML
                 titleElement.innerHTML = highlightedText;
                 const filteredCommands = commands.filter(({ name }) => name.startsWith(value))
-                fadeCommandCards().then(async () => {
-                    await initializeCommands(filteredCommands)
-                })
+                commandsBox.innerHTML = ''
+                await initializeCommands(filteredCommands, true)
             }
         };
     }
-
+    initializeCommands(commands);
+    handleScreenWidthChange(mediaQuery);
     searchButton.onclick = search;
     searchInput.onkeydown = ({ key }) => key && key === 'Enter' ? search() : null;
+    playPageTransition('in');
 })();

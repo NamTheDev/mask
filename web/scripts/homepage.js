@@ -77,7 +77,8 @@
 
   // Initial check
   handleScreenWidthChange(mediaQuery);
-  initializeFeatureCards(config.features)
+  initializeFeatureCards(config.features);
+  playPageTransition('in');
   animateValue(document.getElementById('serverCount'), 0, serverCount, 2000)
   animateValue(document.getElementById('userCount'), 0, userCount, 2000)
   animateValue(document.getElementById('commandCount'), 0, commandCount, 2000)

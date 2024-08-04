@@ -140,4 +140,5 @@
             event.preventDefault();
         }
     });
+    playPageTransition('in');
 })();

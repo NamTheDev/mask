@@ -115,6 +115,7 @@
             }
         }
     });
+    playPageTransition('in');
 })()
 
 function setInput(name) {

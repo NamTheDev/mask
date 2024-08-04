@@ -99,4 +99,5 @@
     window.addEventListener('resize', adjustIframeSizes);
 
     insertVideos(videoIDs);
+    playPageTransition('in');
 })();
