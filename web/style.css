@@ -21,19 +21,6 @@
     /* Adjust as needed */
 }
 
-.command-card {
-    position: relative;
-    transform: translateY(100%);
-    opacity: 0;
-    transition: transform 500ms ease-out, opacity 500ms ease-out;
-    transition-delay: var(--transition-delay)
-}
-
-.command-card.visible {
-    transform: translateY(0);
-    opacity: 1;
-}
-
 .input-wrapper {
     position: relative;
 }
@@ -113,6 +100,7 @@ iframe {
     background-color: black;
     transform: translateX(0px);
     transition: 500ms transform;
+    cursor: progress;
 }
 
 body {
