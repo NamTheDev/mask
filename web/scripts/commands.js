@@ -22,8 +22,8 @@ const OPTION_TYPES = [
 const commandTypesObject = {}
 const optionTypesObject = {}
 
-COMMAND_TYPES.forEach((name, index) => commandTypesObject[index+1] = name)
-OPTION_TYPES.forEach((name, index) => optionTypesObject[index+1] = name)
+COMMAND_TYPES.forEach((name, index) => commandTypesObject[index + 1] = name)
+OPTION_TYPES.forEach((name, index) => optionTypesObject[index + 1] = name)
 
 optionTypesElement.innerHTML = JSON.stringify(commandTypesObject, null, 3);
 commandTypesElement.innerHTML = JSON.stringify(optionTypesObject, null, 3);
@@ -42,10 +42,10 @@ commandTypesElement.innerHTML = JSON.stringify(optionTypesObject, null, 3);
                         <td>${description}</td>
                         <td>${COMMAND_TYPES[type]}</td>
                         <td>
-                        <button class="btn btn-dark btn-sm" name="JSONButton" json="${encodeURI(JSON.stringify(command, null, 3))}">Show JSON</button>
+                        <button class="btn btn-outline-light btn-sm" style="width: 2rem; height: 2rem;" name="JSONButton" json="${encodeURI(JSON.stringify(command, null, 3))}"><i class="fa-solid fa-up-right-from-square"></i></button>
                         <div class="json-data" id="ping-json"></div>
                         </td>
-                        <td>${Number(index)+1}</td>
+                        <td>${Number(index) + 1}</td>
                 </tr>`
         }
         for (const button of JSONButtons) {

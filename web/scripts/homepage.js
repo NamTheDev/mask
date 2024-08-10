@@ -58,7 +58,7 @@
 
   function addFeatureCard(icon, title, content) {
     featureCardsBox.innerHTML += `
-      <div class="card bg-transparent text-center">
+      <div class="card bg-transparent text-center" style="width: 100%;">
       <div class="card-body">
       <i class="${icon} m-2" style="font-size: 50px"></i>
       <h5 class="card-title">${title}</h5>
@@ -72,7 +72,7 @@
     }
   }
 
-  const mediaQuery = window.matchMedia('(max-width: 700px)');
+  const mediaQuery = window.matchMedia('(max-width: 1000px)');
   mediaQuery.addEventListener("change", handleScreenWidthChange);
 
   // Initial check
